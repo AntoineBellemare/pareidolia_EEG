@@ -65,10 +65,10 @@ def compute_psd(epochs, FREQ_BANDS, function=psd_welch, tmin = None, tmax = None
 for subj in SUBJ_LIST:
     for task in TASK_LIST:
         for run in RUN_LIST[task]:
-            epochs_name, epochs_path = get_pareidolia_bids(FOLDERPATH, subj, task, run, stage = 'epo_RT_AR_newEvent', cond=None)
+            epochs_name, epochs_path = get_pareidolia_bids(FOLDERPATH, subj, task, run, stage = 'epo_long_AR_pnp', cond=None)
             epochs = mne.read_epochs(epochs_path)
             #Si vous voulez comparer les epochs entières (8sec), il est mieux de laisser de côté le début et la fin des epochs.
-            psds_welch= compute_psd(epochs, FREQ_BANDS, psd_multitaper, tmin = 1, tmax = 2.4)
+            psds_welch= compute_psd(epochs, FREQ_BANDS, psd_multitaper, tmin = 0.1, tmax = 7.9)
             #le nom du stage doit commencer par PSD, la fin du nom est à votre choix
-            psds_file, psds_path = get_pareidolia_bids(FOLDERPATH, subj, task, run, stage = 'PSD_RT_AR_newEvent')
+            psds_file, psds_path = get_pareidolia_bids(FOLDERPATH, subj, task, run, stage = 'PSD_long_AR_pnp')
             savemat(psds_path, {'PSD': psds_welch})

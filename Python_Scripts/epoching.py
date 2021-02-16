@@ -15,8 +15,8 @@ FOLDERPATH = r'E:\PhD\EEG_data\Pareidolia_BIDS'
 #This variable determines which pareidolia trials will be judged as 'early' or 'late'
 RT_thresh = 4000
 #Here you choose which runs and subjects you want to epoch
-RUN_LIST = {'pareidolia':['4']}
-SUBJ_LIST = ['02']
+RUN_LIST = {'pareidolia':['1', '2', '3', '4']}
+SUBJ_LIST = ['01', '02']
 TASK_LIST = ['pareidolia']
 
 #Initialize report
@@ -76,7 +76,7 @@ def epoching(subj, task, run, slowVSfast = False, FD = 'class', window = None):
     events, medianRT = reformat_events(events, FDlist, RT_thresh, task, run, slowVSfast, FD)
     print(events[:50])
     #Here is a CRUCIAL part of the function, which determines which part of the signal is use for each epoch, and for the baseline.
-    tmin, tmax = -1.5, 2.5  # Here we define the amount of time we want to keep before (tmin) and after (tmax) the event.
+    tmin, tmax = -1.5, 8  # Here we define the amount of time we want to keep before (tmin) and after (tmax) the event.
     baseline = (-1.5, 0)
     #Identification of channels of interest
     EOG_chs = ['E1', 'E8', 'E25', 'E32', 'E126', 'E127']
@@ -128,11 +128,13 @@ def epoching(subj, task, run, slowVSfast = False, FD = 'class', window = None):
                 event_id = {'early_low': 40, 'early_mid': 41, 'early_high': 42, 'late_low': 440, 'late_mid': 441, 'late_high': 442, 'nopar_low':70, 'nopar_mid':71, 'nopar_high':72 }
     #Here we call the function that generates the epochs, using all the necessary information created earlier
     print(event_id)
+
     epochs = mne.Epochs(preproc, events=events, event_id=event_id, tmin=tmin,
                         tmax=tmax, baseline=baseline, reject=None, preload = True, picks = EEG_chs)
     #You can get rid of those two line (which perform autorejection of bad epochs) if your computer have difficulties
-    ar = AutoReject()
-    epochs= ar.fit_transform(epochs)
+    print(epochs)
+    #ar = AutoReject()
+    #epochs= ar.fit_transform(epochs)
     return epochs
 
 #This is a simple loop that iterates through our runs for each subject (depending on the subject chosen at the beginning of the script)
@@ -141,10 +143,10 @@ for i, subj in enumerate(SUBJ_LIST):
         for run in range(len(RUN_LIST[task])):
             run_str = str(run+1)
             ## 'Window = None' when you want epochs for the full trial size (8sec), 'window = 'RT'' when you want epochs around the response event
-            epochs = epoching(subj, task, run_str, slowVSfast = True, FD = 'class', window = 'RT')
+            epochs = epoching(subj, task, run_str, slowVSfast = False, FD = 'class', window = None)
             #In this line, the 'stage' value needs to begin with 'epo', and then you can add anything at the end to identify which epochs
             #have been created. This will represent the end of the name of the epoched file.
-            epochs_file, epochs_path = get_pareidolia_bids(FOLDERPATH, subj, task, '4', stage = 'epo_RT_AR_newEvent')
+            epochs_file, epochs_path = get_pareidolia_bids(FOLDERPATH, subj, task, run_str, stage = 'epo_long_AR_pnp')
             epochs.save(epochs_path, overwrite=True)
 #ar = AutoReject()
 #epochs[b]= ar.fit_transform(epochs[b])

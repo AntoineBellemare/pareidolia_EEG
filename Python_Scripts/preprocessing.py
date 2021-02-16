@@ -8,7 +8,7 @@ import matplotlib.pyplot as plt
 from mne.preprocessing import ICA, create_eog_epochs, create_ecg_epochs
 from EEG_pareidolia_utils import get_pareidolia_bids
 
-def saflow_preproc(filepath, savepath, reportpath):
+def pareidolia_preproc(filepath, savepath, reportpath):
     if task == 'pareidolia':
         start_value = 300.0
     if task == 'RS':
@@ -122,4 +122,4 @@ for subj in SUBJ_LIST:
             preproc_name, preproc_path = get_pareidolia_bids(FOLDERPATH, subj, task, run, stage = 'preproc', cond=None)
             report_name, report_path = get_pareidolia_bids(FOLDERPATH, subj, task, run, stage = 'report_preproc', cond=None)
 
-            saflow_preproc(filepath, preproc_path, report_path)
+            pareidolia_preproc(filepath, preproc_path, report_path)
