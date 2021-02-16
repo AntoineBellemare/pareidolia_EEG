@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.90.3),
-    on February 16, 2021, at 14:07
+    on February 16, 2021, at 14:21
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -911,7 +911,7 @@ while continueRoutine:
         RS01_in.tStart = t
         RS01_in.frameNStart = frameN  # exact frame index
         RS01_in.status = STARTED
-        win.callOnFlip(RS01_in.setData, int(00))
+        win.callOnFlip(RS01_in.setData, int(1))
     frameRemains = 0.0 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
     if RS01_in.status == STARTED and t >= frameRemains:
         RS01_in.status = STOPPED
@@ -1174,7 +1174,7 @@ for thisTrial_4 in trials_4:
             cross.tStart = t
             cross.frameNStart = frameN  # exact frame index
             cross.status = STARTED
-            win.callOnFlip(cross.setData, int(00))
+            win.callOnFlip(cross.setData, int(3))
         frameRemains = 1 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
         if cross.status == STARTED and t >= frameRemains:
             cross.status = STOPPED
@@ -1185,7 +1185,7 @@ for thisTrial_4 in trials_4:
             image_in.tStart = t
             image_in.frameNStart = frameN  # exact frame index
             image_in.status = STARTED
-            win.callOnFlip(image_in.setData, int(1))
+            win.callOnFlip(image_in.setData, int(4))
         frameRemains = 2.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image_in.status == STARTED and t >= frameRemains:
             image_in.status = STOPPED
@@ -1196,7 +1196,7 @@ for thisTrial_4 in trials_4:
             image_out.tStart = t
             image_out.frameNStart = frameN  # exact frame index
             image_out.status = STARTED
-            win.callOnFlip(image_out.setData, int(2))
+            win.callOnFlip(image_out.setData, int(5))
         frameRemains = 10.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image_out.status == STARTED and t >= frameRemains:
             image_out.status = STOPPED
@@ -1207,7 +1207,7 @@ for thisTrial_4 in trials_4:
             RT.tStart = t
             RT.frameNStart = frameN  # exact frame index
             RT.status = STARTED
-            win.callOnFlip(RT.setData, int(3))
+            win.callOnFlip(RT.setData, int(6))
         if RT.status == STARTED and t >= (RT.tStart + 0.1):
             RT.status = STOPPED
             win.callOnFlip(RT.setData, int(0))
@@ -1470,7 +1470,7 @@ for thisTrial in trials:
             cross.tStart = t
             cross.frameNStart = frameN  # exact frame index
             cross.status = STARTED
-            win.callOnFlip(cross.setData, int(00))
+            win.callOnFlip(cross.setData, int(3))
         frameRemains = 1 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
         if cross.status == STARTED and t >= frameRemains:
             cross.status = STOPPED
@@ -1481,7 +1481,7 @@ for thisTrial in trials:
             image_in.tStart = t
             image_in.frameNStart = frameN  # exact frame index
             image_in.status = STARTED
-            win.callOnFlip(image_in.setData, int(01))
+            win.callOnFlip(image_in.setData, int(4))
         frameRemains = 2.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image_in.status == STARTED and t >= frameRemains:
             image_in.status = STOPPED
@@ -1492,7 +1492,7 @@ for thisTrial in trials:
             image_out.tStart = t
             image_out.frameNStart = frameN  # exact frame index
             image_out.status = STARTED
-            win.callOnFlip(image_out.setData, int(02))
+            win.callOnFlip(image_out.setData, int(5))
         frameRemains = 10.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image_out.status == STARTED and t >= frameRemains:
             image_out.status = STOPPED
@@ -1503,7 +1503,7 @@ for thisTrial in trials:
             RT.tStart = t
             RT.frameNStart = frameN  # exact frame index
             RT.status = STARTED
-            win.callOnFlip(RT.setData, int(03))
+            win.callOnFlip(RT.setData, int(6))
         if RT.status == STARTED and t >= (RT.tStart + 0.1):
             RT.status = STOPPED
             win.callOnFlip(RT.setData, int(0))
@@ -2113,7 +2113,7 @@ for thisTrial_2 in trials_2:
             cross.tStart = t
             cross.frameNStart = frameN  # exact frame index
             cross.status = STARTED
-            win.callOnFlip(cross.setData, int(00))
+            win.callOnFlip(cross.setData, int(3))
         frameRemains = 1 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
         if cross.status == STARTED and t >= frameRemains:
             cross.status = STOPPED
@@ -2124,7 +2124,7 @@ for thisTrial_2 in trials_2:
             image_in.tStart = t
             image_in.frameNStart = frameN  # exact frame index
             image_in.status = STARTED
-            win.callOnFlip(image_in.setData, int(01))
+            win.callOnFlip(image_in.setData, int(4))
         frameRemains = 2.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image_in.status == STARTED and t >= frameRemains:
             image_in.status = STOPPED
@@ -2135,7 +2135,7 @@ for thisTrial_2 in trials_2:
             image_out.tStart = t
             image_out.frameNStart = frameN  # exact frame index
             image_out.status = STARTED
-            win.callOnFlip(image_out.setData, int(02))
+            win.callOnFlip(image_out.setData, int(5))
         frameRemains = 10.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image_out.status == STARTED and t >= frameRemains:
             image_out.status = STOPPED
@@ -2146,7 +2146,7 @@ for thisTrial_2 in trials_2:
             RT.tStart = t
             RT.frameNStart = frameN  # exact frame index
             RT.status = STARTED
-            win.callOnFlip(RT.setData, int(03))
+            win.callOnFlip(RT.setData, int(6))
         if RT.status == STARTED and t >= (RT.tStart + 0.1):
             RT.status = STOPPED
             win.callOnFlip(RT.setData, int(0))
@@ -2756,7 +2756,7 @@ for thisTrial_3 in trials_3:
             cross.tStart = t
             cross.frameNStart = frameN  # exact frame index
             cross.status = STARTED
-            win.callOnFlip(cross.setData, int(00))
+            win.callOnFlip(cross.setData, int(3))
         frameRemains = 1 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
         if cross.status == STARTED and t >= frameRemains:
             cross.status = STOPPED
@@ -2767,7 +2767,7 @@ for thisTrial_3 in trials_3:
             image_in.tStart = t
             image_in.frameNStart = frameN  # exact frame index
             image_in.status = STARTED
-            win.callOnFlip(image_in.setData, int(01))
+            win.callOnFlip(image_in.setData, int(4))
         frameRemains = 2.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image_in.status == STARTED and t >= frameRemains:
             image_in.status = STOPPED
@@ -2778,7 +2778,7 @@ for thisTrial_3 in trials_3:
             image_out.tStart = t
             image_out.frameNStart = frameN  # exact frame index
             image_out.status = STARTED
-            win.callOnFlip(image_out.setData, int(02))
+            win.callOnFlip(image_out.setData, int(5))
         frameRemains = 10.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image_out.status == STARTED and t >= frameRemains:
             image_out.status = STOPPED
@@ -2789,7 +2789,7 @@ for thisTrial_3 in trials_3:
             RT.tStart = t
             RT.frameNStart = frameN  # exact frame index
             RT.status = STARTED
-            win.callOnFlip(RT.setData, int(03))
+            win.callOnFlip(RT.setData, int(6))
         if RT.status == STARTED and t >= (RT.tStart + 0.1):
             RT.status = STOPPED
             win.callOnFlip(RT.setData, int(0))
@@ -3453,7 +3453,7 @@ for thisTrials_sham in trials_sham:
             cross.tStart = t
             cross.frameNStart = frameN  # exact frame index
             cross.status = STARTED
-            win.callOnFlip(cross.setData, int(00))
+            win.callOnFlip(cross.setData, int(3))
         frameRemains = 1 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
         if cross.status == STARTED and t >= frameRemains:
             cross.status = STOPPED
@@ -3464,7 +3464,7 @@ for thisTrials_sham in trials_sham:
             image_in.tStart = t
             image_in.frameNStart = frameN  # exact frame index
             image_in.status = STARTED
-            win.callOnFlip(image_in.setData, int(01))
+            win.callOnFlip(image_in.setData, int(4))
         frameRemains = 2.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image_in.status == STARTED and t >= frameRemains:
             image_in.status = STOPPED
@@ -3475,7 +3475,7 @@ for thisTrials_sham in trials_sham:
             image_out.tStart = t
             image_out.frameNStart = frameN  # exact frame index
             image_out.status = STARTED
-            win.callOnFlip(image_out.setData, int(02))
+            win.callOnFlip(image_out.setData, int(5))
         frameRemains = 10.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image_out.status == STARTED and t >= frameRemains:
             image_out.status = STOPPED
@@ -3486,7 +3486,7 @@ for thisTrials_sham in trials_sham:
             RT.tStart = t
             RT.frameNStart = frameN  # exact frame index
             RT.status = STARTED
-            win.callOnFlip(RT.setData, int(03))
+            win.callOnFlip(RT.setData, int(6))
         if RT.status == STARTED and t >= (RT.tStart + 0.1):
             RT.status = STOPPED
             win.callOnFlip(RT.setData, int(0))
@@ -3912,7 +3912,7 @@ while continueRoutine:
         RS01_in.tStart = t
         RS01_in.frameNStart = frameN  # exact frame index
         RS01_in.status = STARTED
-        win.callOnFlip(RS01_in.setData, int(00))
+        win.callOnFlip(RS01_in.setData, int(1))
     frameRemains = 0.0 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
     if RS01_in.status == STARTED and t >= frameRemains:
         RS01_in.status = STOPPED
