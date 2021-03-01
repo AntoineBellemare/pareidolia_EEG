@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.90.3),
-    on February 16, 2021, at 14:21
+    on February 28, 2020, at 14:18
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -11,7 +11,7 @@ If you publish work using this script please cite the PsychoPy publications:
 """
 
 from __future__ import absolute_import, division
-from psychopy import locale_setup, sound, gui, visual, core, data, event, logging, clock, parallel
+from psychopy import locale_setup, sound, gui, visual, core, data, event, logging, clock
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -20,9 +20,19 @@ from numpy import (sin, cos, tan, log, log10, pi, average,
 from numpy.random import random, randint, normal, shuffle
 import os  # handy system and path functions
 import sys  # to get file system encoding
+import time
+import pandas as pd
 
+
+# Activate parallel port
+
+port = parallel.ParallelPort(address='/dev/parport0')
+def send_data(port, data):
+    port.setData(data)
+    time.sleep(0.001)
+    port.setData(0)  # reset
 # Ensure that relative paths start from the same directory as this script
-_thisDir = os.path.dirname(os.path.abspath(__file__))
+_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
 os.chdir(_thisDir)
 
 # Store info about the experiment session
@@ -108,13 +118,11 @@ Resting = visual.TextStim(win=win, name='Resting',
 Resting_stateClock = core.Clock()
 fix_resting_state = visual.ImageStim(
     win=win, name='fix_resting_state',
-    image=u'fixation_cross', mask=None,
+    image='fixation_cross', mask=None,
     ori=0, pos=(0, 0), size=[0.4, 0.71111111],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=0.0)
-RS01_in = parallel.ParallelPort(address=u'0x0378')
-RS01_out = parallel.ParallelPort(address=u'0x0378')
 
 # Initialize components for Routine "Start_pratique"
 Start_pratiqueClock = core.Clock()
@@ -150,10 +158,6 @@ image = visual.ImageStim(
     texRes=128, interpolate=True, depth=-2.0)
 n_objets = visual.RatingScale(win=win, name='n_objets', marker='triangle', size=1.0, pos=[0.0, 0.0], low=1, high=5, labels=['1', ' 5 et plus'], scale=u"Veuillez indiquer le nombre d'objets significatifs per\xe7us", disappear=True)
 vividness = visual.RatingScale(win=win, name='vividness', marker='triangle', size=1, pos=[0.0, 0.0], low=1, high=5, labels=[u'Tr\xe8s peu vivide', u' Fortement vivide'], scale=u'Veuillez indiquer la vividit\xe9 de votre perception', disappear=True)
-cross = parallel.ParallelPort(address=u'0x0378')
-image_in = parallel.ParallelPort(address=u'0x0378')
-image_out = parallel.ParallelPort(address=u'0x0378')
-RT = parallel.ParallelPort(address=u'0x0378')
 
 # Initialize components for Routine "Startx"
 StartxClock = core.Clock()
@@ -189,10 +193,6 @@ image = visual.ImageStim(
     texRes=128, interpolate=True, depth=-2.0)
 n_objets = visual.RatingScale(win=win, name='n_objets', marker='triangle', size=1.0, pos=[0.0, 0.0], low=1, high=5, labels=['1', ' 5 et plus'], scale=u"Veuillez indiquer le nombre d'objets significatifs per\xe7us", disappear=True)
 vividness = visual.RatingScale(win=win, name='vividness', marker='triangle', size=1, pos=[0.0, 0.0], low=1, high=5, labels=[u'Tr\xe8s peu vivide', u' Fortement vivide'], scale=u'Veuillez indiquer la vividit\xe9 de votre perception', disappear=True)
-cross = parallel.ParallelPort(address=u'0x0378')
-image_in = parallel.ParallelPort(address=u'0x0378')
-image_out = parallel.ParallelPort(address=u'0x0378')
-RT = parallel.ParallelPort(address=u'0x0378')
 
 # Initialize components for Routine "Fin_bloc"
 Fin_blocClock = core.Clock()
@@ -263,10 +263,6 @@ image = visual.ImageStim(
     texRes=128, interpolate=True, depth=-2.0)
 n_objets = visual.RatingScale(win=win, name='n_objets', marker='triangle', size=1.0, pos=[0.0, 0.0], low=1, high=5, labels=['1', ' 5 et plus'], scale=u"Veuillez indiquer le nombre d'objets significatifs per\xe7us", disappear=True)
 vividness = visual.RatingScale(win=win, name='vividness', marker='triangle', size=1, pos=[0.0, 0.0], low=1, high=5, labels=[u'Tr\xe8s peu vivide', u' Fortement vivide'], scale=u'Veuillez indiquer la vividit\xe9 de votre perception', disappear=True)
-cross = parallel.ParallelPort(address=u'0x0378')
-image_in = parallel.ParallelPort(address=u'0x0378')
-image_out = parallel.ParallelPort(address=u'0x0378')
-RT = parallel.ParallelPort(address=u'0x0378')
 
 # Initialize components for Routine "Fin_bloc"
 Fin_blocClock = core.Clock()
@@ -337,10 +333,6 @@ image = visual.ImageStim(
     texRes=128, interpolate=True, depth=-2.0)
 n_objets = visual.RatingScale(win=win, name='n_objets', marker='triangle', size=1.0, pos=[0.0, 0.0], low=1, high=5, labels=['1', ' 5 et plus'], scale=u"Veuillez indiquer le nombre d'objets significatifs per\xe7us", disappear=True)
 vividness = visual.RatingScale(win=win, name='vividness', marker='triangle', size=1, pos=[0.0, 0.0], low=1, high=5, labels=[u'Tr\xe8s peu vivide', u' Fortement vivide'], scale=u'Veuillez indiquer la vividit\xe9 de votre perception', disappear=True)
-cross = parallel.ParallelPort(address=u'0x0378')
-image_in = parallel.ParallelPort(address=u'0x0378')
-image_out = parallel.ParallelPort(address=u'0x0378')
-RT = parallel.ParallelPort(address=u'0x0378')
 
 # Initialize components for Routine "Fin_bloc"
 Fin_blocClock = core.Clock()
@@ -415,10 +407,6 @@ image = visual.ImageStim(
     texRes=128, interpolate=True, depth=-2.0)
 n_objets = visual.RatingScale(win=win, name='n_objets', marker='triangle', size=1.0, pos=[0.0, 0.0], low=1, high=5, labels=['1', ' 5 et plus'], scale=u"Veuillez indiquer le nombre d'objets significatifs per\xe7us", disappear=True)
 vividness = visual.RatingScale(win=win, name='vividness', marker='triangle', size=1, pos=[0.0, 0.0], low=1, high=5, labels=[u'Tr\xe8s peu vivide', u' Fortement vivide'], scale=u'Veuillez indiquer la vividit\xe9 de votre perception', disappear=True)
-cross = parallel.ParallelPort(address=u'0x0378')
-image_in = parallel.ParallelPort(address=u'0x0378')
-image_out = parallel.ParallelPort(address=u'0x0378')
-RT = parallel.ParallelPort(address=u'0x0378')
 
 # Initialize components for Routine "Mental_fatigue"
 Mental_fatigueClock = core.Clock()
@@ -459,13 +447,11 @@ resting_instructions_end = visual.TextStim(win=win, name='resting_instructions_e
 Resting_stateClock = core.Clock()
 fix_resting_state = visual.ImageStim(
     win=win, name='fix_resting_state',
-    image=u'fixation_cross', mask=None,
+    image='fixation_cross', mask=None,
     ori=0, pos=(0, 0), size=[0.4, 0.71111111],
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=0.0)
-RS01_in = parallel.ParallelPort(address=u'0x0378')
-RS01_out = parallel.ParallelPort(address=u'0x0378')
 
 # Initialize components for Routine "Sham"
 ShamClock = core.Clock()
@@ -863,7 +849,7 @@ continueRoutine = True
 # update component parameters for each repeat
 key_resp_10 = event.BuilderKeyResponse()
 # keep track of which components have finished
-Resting_stateComponents = [fix_resting_state, key_resp_10, RS01_in, RS01_out]
+Resting_stateComponents = [fix_resting_state, key_resp_10]
 for thisComponent in Resting_stateComponents:
     if hasattr(thisComponent, 'status'):
         thisComponent.status = NOT_STARTED
@@ -881,9 +867,11 @@ while continueRoutine:
         fix_resting_state.tStart = t
         fix_resting_state.frameNStart = frameN  # exact frame index
         fix_resting_state.setAutoDraw(True)
-    frameRemains = 0.0 + 5- win.monitorFramePeriod * 0.75  # most of one frame period left
+        win.callOnFlip(send_data, port, '1')
+    frameRemains = 0.0 + 180- win.monitorFramePeriod * 0.75  # most of one frame period left
     if fix_resting_state.status == STARTED and t >= frameRemains:
         fix_resting_state.setAutoDraw(False)
+        win.callOnFlip(send_data, port, '2')
     
     # *key_resp_10* updates
     if t >= 0.0 and key_resp_10.status == NOT_STARTED:
@@ -905,28 +893,6 @@ while continueRoutine:
             key_resp_10.rt = key_resp_10.clock.getTime()
             # a response ends the routine
             continueRoutine = False
-    # *RS01_in* updates
-    if t >= 0.0 and RS01_in.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        RS01_in.tStart = t
-        RS01_in.frameNStart = frameN  # exact frame index
-        RS01_in.status = STARTED
-        win.callOnFlip(RS01_in.setData, int(1))
-    frameRemains = 0.0 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-    if RS01_in.status == STARTED and t >= frameRemains:
-        RS01_in.status = STOPPED
-        win.callOnFlip(RS01_in.setData, int(0))
-    # *RS01_out* updates
-    if t >= 5 and RS01_out.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        RS01_out.tStart = t
-        RS01_out.frameNStart = frameN  # exact frame index
-        RS01_out.status = STARTED
-        win.callOnFlip(RS01_out.setData, int(2))
-    frameRemains = 5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-    if RS01_out.status == STARTED and t >= frameRemains:
-        RS01_out.status = STOPPED
-        win.callOnFlip(RS01_out.setData, int(0))
     
     # check if all components have finished
     if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -956,10 +922,6 @@ thisExp.addData('key_resp_10.keys',key_resp_10.keys)
 if key_resp_10.keys != None:  # we had a response
     thisExp.addData('key_resp_10.rt', key_resp_10.rt)
 thisExp.nextEntry()
-if RS01_in.status == STARTED:
-    win.callOnFlip(RS01_in.setData, int(0))
-if RS01_out.status == STARTED:
-    win.callOnFlip(RS01_out.setData, int(0))
 # the Routine "Resting_state" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
@@ -1073,7 +1035,7 @@ for thisTrial_4 in trials_4:
     vividness.reset()
     If_No_Resp = event.BuilderKeyResponse()
     # keep track of which components have finished
-    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, vividness, If_No_Resp, cross, image_in, image_out, RT]
+    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, vividness, If_No_Resp]
     for thisComponent in trial1Components:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -1168,49 +1130,6 @@ for thisTrial_4 in trials_4:
             if len(theseKeys) > 0:  # at least one key was pressed
                 # a response ends the routine
                 continueRoutine = False
-        # *cross* updates
-        if t >= 1 and cross.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            cross.tStart = t
-            cross.frameNStart = frameN  # exact frame index
-            cross.status = STARTED
-            win.callOnFlip(cross.setData, int(3))
-        frameRemains = 1 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if cross.status == STARTED and t >= frameRemains:
-            cross.status = STOPPED
-            win.callOnFlip(cross.setData, int(0))
-        # *image_in* updates
-        if t >= 2.5 and image_in.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            image_in.tStart = t
-            image_in.frameNStart = frameN  # exact frame index
-            image_in.status = STARTED
-            win.callOnFlip(image_in.setData, int(4))
-        frameRemains = 2.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if image_in.status == STARTED and t >= frameRemains:
-            image_in.status = STOPPED
-            win.callOnFlip(image_in.setData, int(0))
-        # *image_out* updates
-        if t >= 10.5 and image_out.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            image_out.tStart = t
-            image_out.frameNStart = frameN  # exact frame index
-            image_out.status = STARTED
-            win.callOnFlip(image_out.setData, int(5))
-        frameRemains = 10.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if image_out.status == STARTED and t >= frameRemains:
-            image_out.status = STOPPED
-            win.callOnFlip(image_out.setData, int(0))
-        # *RT* updates
-        if (reaction_time==True) and RT.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            RT.tStart = t
-            RT.frameNStart = frameN  # exact frame index
-            RT.status = STARTED
-            win.callOnFlip(RT.setData, int(6))
-        if RT.status == STARTED and t >= (RT.tStart + 0.1):
-            RT.status = STOPPED
-            win.callOnFlip(RT.setData, int(0))
         
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -1244,14 +1163,6 @@ for thisTrial_4 in trials_4:
     # store data for trials_4 (TrialHandler)
     trials_4.addData('vividness.response', vividness.getRating())
     trials_4.addData('vividness.rt', vividness.getRT())
-    if cross.status == STARTED:
-        win.callOnFlip(cross.setData, int(0))
-    if image_in.status == STARTED:
-        win.callOnFlip(image_in.setData, int(0))
-    if image_out.status == STARTED:
-        win.callOnFlip(image_out.setData, int(0))
-    if RT.status == STARTED:
-        win.callOnFlip(RT.setData, int(0))
     # the Routine "trial1" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     thisExp.nextEntry()
@@ -1369,7 +1280,7 @@ for thisTrial in trials:
     vividness.reset()
     If_No_Resp = event.BuilderKeyResponse()
     # keep track of which components have finished
-    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, vividness, If_No_Resp, cross, image_in, image_out, RT]
+    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, vividness, If_No_Resp]
     for thisComponent in trial1Components:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -1387,6 +1298,7 @@ for thisTrial in trials:
             empty_gray.tStart = t
             empty_gray.frameNStart = frameN  # exact frame index
             empty_gray.setAutoDraw(True)
+            win.callOnFlip(send_data, port, '3')
         frameRemains = 0.0 + 1.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if empty_gray.status == STARTED and t >= frameRemains:
             empty_gray.setAutoDraw(False)
@@ -1397,6 +1309,7 @@ for thisTrial in trials:
             fixation_cross.tStart = t
             fixation_cross.frameNStart = frameN  # exact frame index
             fixation_cross.setAutoDraw(True)
+            win.callOnFlip(send_data, port, 4)
         frameRemains = 1 + 1.5- win.monitorFramePeriod * 0.75  # most of one frame period left
         if fixation_cross.status == STARTED and t >= frameRemains:
             fixation_cross.setAutoDraw(False)
@@ -1407,9 +1320,11 @@ for thisTrial in trials:
             image.tStart = t
             image.frameNStart = frameN  # exact frame index
             image.setAutoDraw(True)
+            win.callOnFlip(send_data, port, 5)
         frameRemains = 2.5 + 8.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image.status == STARTED and t >= frameRemains:
             image.setAutoDraw(False)
+            win.callOnFlip(send_data, port, 6)
         # *n_objets* updates
         if (t >=10.5) and n_objets.status == NOT_STARTED:
             # keep track of start time/frame for later
@@ -1431,7 +1346,10 @@ for thisTrial in trials:
             reaction_time.status = STOPPED
         if reaction_time.status == STARTED:
             theseKeys = event.getKeys(keyList=['space'])
-            
+            if theseKeys == ['space']:  
+                win.callOnFlip(ns.sync)
+                win.callOnFlip(ns.send_event, 7)
+                
             # check for quit:
             if "escape" in theseKeys:
                 endExpNow = True
@@ -1464,49 +1382,6 @@ for thisTrial in trials:
             if len(theseKeys) > 0:  # at least one key was pressed
                 # a response ends the routine
                 continueRoutine = False
-        # *cross* updates
-        if t >= 1 and cross.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            cross.tStart = t
-            cross.frameNStart = frameN  # exact frame index
-            cross.status = STARTED
-            win.callOnFlip(cross.setData, int(3))
-        frameRemains = 1 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if cross.status == STARTED and t >= frameRemains:
-            cross.status = STOPPED
-            win.callOnFlip(cross.setData, int(0))
-        # *image_in* updates
-        if t >= 2.5 and image_in.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            image_in.tStart = t
-            image_in.frameNStart = frameN  # exact frame index
-            image_in.status = STARTED
-            win.callOnFlip(image_in.setData, int(4))
-        frameRemains = 2.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if image_in.status == STARTED and t >= frameRemains:
-            image_in.status = STOPPED
-            win.callOnFlip(image_in.setData, int(0))
-        # *image_out* updates
-        if t >= 10.5 and image_out.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            image_out.tStart = t
-            image_out.frameNStart = frameN  # exact frame index
-            image_out.status = STARTED
-            win.callOnFlip(image_out.setData, int(5))
-        frameRemains = 10.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if image_out.status == STARTED and t >= frameRemains:
-            image_out.status = STOPPED
-            win.callOnFlip(image_out.setData, int(0))
-        # *RT* updates
-        if (reaction_time==True) and RT.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            RT.tStart = t
-            RT.frameNStart = frameN  # exact frame index
-            RT.status = STARTED
-            win.callOnFlip(RT.setData, int(6))
-        if RT.status == STARTED and t >= (RT.tStart + 0.1):
-            RT.status = STOPPED
-            win.callOnFlip(RT.setData, int(0))
         
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -1540,14 +1415,6 @@ for thisTrial in trials:
     # store data for trials (TrialHandler)
     trials.addData('vividness.response', vividness.getRating())
     trials.addData('vividness.rt', vividness.getRT())
-    if cross.status == STARTED:
-        win.callOnFlip(cross.setData, int(0))
-    if image_in.status == STARTED:
-        win.callOnFlip(image_in.setData, int(0))
-    if image_out.status == STARTED:
-        win.callOnFlip(image_out.setData, int(0))
-    if RT.status == STARTED:
-        win.callOnFlip(RT.setData, int(0))
     # the Routine "trial1" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     thisExp.nextEntry()
@@ -2012,7 +1879,7 @@ for thisTrial_2 in trials_2:
     vividness.reset()
     If_No_Resp = event.BuilderKeyResponse()
     # keep track of which components have finished
-    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, vividness, If_No_Resp, cross, image_in, image_out, RT]
+    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, vividness, If_No_Resp]
     for thisComponent in trial1Components:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -2030,6 +1897,8 @@ for thisTrial_2 in trials_2:
             empty_gray.tStart = t
             empty_gray.frameNStart = frameN  # exact frame index
             empty_gray.setAutoDraw(True)
+            win.callOnFlip(ns.sync)
+            win.callOnFlip(ns.send_event, '0')
         frameRemains = 0.0 + 1.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if empty_gray.status == STARTED and t >= frameRemains:
             empty_gray.setAutoDraw(False)
@@ -2040,6 +1909,8 @@ for thisTrial_2 in trials_2:
             fixation_cross.tStart = t
             fixation_cross.frameNStart = frameN  # exact frame index
             fixation_cross.setAutoDraw(True)
+            win.callOnFlip(ns.sync)
+            win.callOnFlip(ns.send_event, '1')
         frameRemains = 1 + 1.5- win.monitorFramePeriod * 0.75  # most of one frame period left
         if fixation_cross.status == STARTED and t >= frameRemains:
             fixation_cross.setAutoDraw(False)
@@ -2050,9 +1921,13 @@ for thisTrial_2 in trials_2:
             image.tStart = t
             image.frameNStart = frameN  # exact frame index
             image.setAutoDraw(True)
+            win.callOnFlip(ns.sync)
+            win.callOnFlip(ns.send_event, '2')
         frameRemains = 2.5 + 8.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image.status == STARTED and t >= frameRemains:
             image.setAutoDraw(False)
+            win.callOnFlip(ns.sync)
+            win.callOnFlip(ns.send_event, '3')
         # *n_objets* updates
         if (t >=10.5) and n_objets.status == NOT_STARTED:
             # keep track of start time/frame for later
@@ -2074,7 +1949,9 @@ for thisTrial_2 in trials_2:
             reaction_time.status = STOPPED
         if reaction_time.status == STARTED:
             theseKeys = event.getKeys(keyList=['space'])
-            
+            if theseKeys == ['space']:  
+                win.callOnFlip(ns.sync)
+                win.callOnFlip(ns.send_event, '4')
             # check for quit:
             if "escape" in theseKeys:
                 endExpNow = True
@@ -2107,49 +1984,6 @@ for thisTrial_2 in trials_2:
             if len(theseKeys) > 0:  # at least one key was pressed
                 # a response ends the routine
                 continueRoutine = False
-        # *cross* updates
-        if t >= 1 and cross.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            cross.tStart = t
-            cross.frameNStart = frameN  # exact frame index
-            cross.status = STARTED
-            win.callOnFlip(cross.setData, int(3))
-        frameRemains = 1 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if cross.status == STARTED and t >= frameRemains:
-            cross.status = STOPPED
-            win.callOnFlip(cross.setData, int(0))
-        # *image_in* updates
-        if t >= 2.5 and image_in.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            image_in.tStart = t
-            image_in.frameNStart = frameN  # exact frame index
-            image_in.status = STARTED
-            win.callOnFlip(image_in.setData, int(4))
-        frameRemains = 2.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if image_in.status == STARTED and t >= frameRemains:
-            image_in.status = STOPPED
-            win.callOnFlip(image_in.setData, int(0))
-        # *image_out* updates
-        if t >= 10.5 and image_out.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            image_out.tStart = t
-            image_out.frameNStart = frameN  # exact frame index
-            image_out.status = STARTED
-            win.callOnFlip(image_out.setData, int(5))
-        frameRemains = 10.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if image_out.status == STARTED and t >= frameRemains:
-            image_out.status = STOPPED
-            win.callOnFlip(image_out.setData, int(0))
-        # *RT* updates
-        if (reaction_time==True) and RT.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            RT.tStart = t
-            RT.frameNStart = frameN  # exact frame index
-            RT.status = STARTED
-            win.callOnFlip(RT.setData, int(6))
-        if RT.status == STARTED and t >= (RT.tStart + 0.1):
-            RT.status = STOPPED
-            win.callOnFlip(RT.setData, int(0))
         
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -2183,14 +2017,6 @@ for thisTrial_2 in trials_2:
     # store data for trials_2 (TrialHandler)
     trials_2.addData('vividness.response', vividness.getRating())
     trials_2.addData('vividness.rt', vividness.getRT())
-    if cross.status == STARTED:
-        win.callOnFlip(cross.setData, int(0))
-    if image_in.status == STARTED:
-        win.callOnFlip(image_in.setData, int(0))
-    if image_out.status == STARTED:
-        win.callOnFlip(image_out.setData, int(0))
-    if RT.status == STARTED:
-        win.callOnFlip(RT.setData, int(0))
     # the Routine "trial1" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     thisExp.nextEntry()
@@ -2655,7 +2481,7 @@ for thisTrial_3 in trials_3:
     vividness.reset()
     If_No_Resp = event.BuilderKeyResponse()
     # keep track of which components have finished
-    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, vividness, If_No_Resp, cross, image_in, image_out, RT]
+    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, vividness, If_No_Resp]
     for thisComponent in trial1Components:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -2673,6 +2499,8 @@ for thisTrial_3 in trials_3:
             empty_gray.tStart = t
             empty_gray.frameNStart = frameN  # exact frame index
             empty_gray.setAutoDraw(True)
+            win.callOnFlip(ns.sync)
+            win.callOnFlip(ns.send_event, '0')
         frameRemains = 0.0 + 1.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if empty_gray.status == STARTED and t >= frameRemains:
             empty_gray.setAutoDraw(False)
@@ -2683,6 +2511,8 @@ for thisTrial_3 in trials_3:
             fixation_cross.tStart = t
             fixation_cross.frameNStart = frameN  # exact frame index
             fixation_cross.setAutoDraw(True)
+            win.callOnFlip(ns.sync)
+            win.callOnFlip(ns.send_event, '1')
         frameRemains = 1 + 1.5- win.monitorFramePeriod * 0.75  # most of one frame period left
         if fixation_cross.status == STARTED and t >= frameRemains:
             fixation_cross.setAutoDraw(False)
@@ -2693,9 +2523,13 @@ for thisTrial_3 in trials_3:
             image.tStart = t
             image.frameNStart = frameN  # exact frame index
             image.setAutoDraw(True)
+            win.callOnFlip(ns.sync)
+            win.callOnFlip(ns.send_event, '2')
         frameRemains = 2.5 + 8.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image.status == STARTED and t >= frameRemains:
             image.setAutoDraw(False)
+            win.callOnFlip(ns.sync)
+            win.callOnFlip(ns.send_event, '3')
         # *n_objets* updates
         if (t >=10.5) and n_objets.status == NOT_STARTED:
             # keep track of start time/frame for later
@@ -2717,7 +2551,9 @@ for thisTrial_3 in trials_3:
             reaction_time.status = STOPPED
         if reaction_time.status == STARTED:
             theseKeys = event.getKeys(keyList=['space'])
-            
+            if theseKeys == ['space']:  
+                win.callOnFlip(ns.sync)
+                win.callOnFlip(ns.send_event, '4')
             # check for quit:
             if "escape" in theseKeys:
                 endExpNow = True
@@ -2750,49 +2586,6 @@ for thisTrial_3 in trials_3:
             if len(theseKeys) > 0:  # at least one key was pressed
                 # a response ends the routine
                 continueRoutine = False
-        # *cross* updates
-        if t >= 1 and cross.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            cross.tStart = t
-            cross.frameNStart = frameN  # exact frame index
-            cross.status = STARTED
-            win.callOnFlip(cross.setData, int(3))
-        frameRemains = 1 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if cross.status == STARTED and t >= frameRemains:
-            cross.status = STOPPED
-            win.callOnFlip(cross.setData, int(0))
-        # *image_in* updates
-        if t >= 2.5 and image_in.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            image_in.tStart = t
-            image_in.frameNStart = frameN  # exact frame index
-            image_in.status = STARTED
-            win.callOnFlip(image_in.setData, int(4))
-        frameRemains = 2.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if image_in.status == STARTED and t >= frameRemains:
-            image_in.status = STOPPED
-            win.callOnFlip(image_in.setData, int(0))
-        # *image_out* updates
-        if t >= 10.5 and image_out.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            image_out.tStart = t
-            image_out.frameNStart = frameN  # exact frame index
-            image_out.status = STARTED
-            win.callOnFlip(image_out.setData, int(5))
-        frameRemains = 10.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if image_out.status == STARTED and t >= frameRemains:
-            image_out.status = STOPPED
-            win.callOnFlip(image_out.setData, int(0))
-        # *RT* updates
-        if (reaction_time==True) and RT.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            RT.tStart = t
-            RT.frameNStart = frameN  # exact frame index
-            RT.status = STARTED
-            win.callOnFlip(RT.setData, int(6))
-        if RT.status == STARTED and t >= (RT.tStart + 0.1):
-            RT.status = STOPPED
-            win.callOnFlip(RT.setData, int(0))
         
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -2826,14 +2619,6 @@ for thisTrial_3 in trials_3:
     # store data for trials_3 (TrialHandler)
     trials_3.addData('vividness.response', vividness.getRating())
     trials_3.addData('vividness.rt', vividness.getRT())
-    if cross.status == STARTED:
-        win.callOnFlip(cross.setData, int(0))
-    if image_in.status == STARTED:
-        win.callOnFlip(image_in.setData, int(0))
-    if image_out.status == STARTED:
-        win.callOnFlip(image_out.setData, int(0))
-    if RT.status == STARTED:
-        win.callOnFlip(RT.setData, int(0))
     # the Routine "trial1" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     thisExp.nextEntry()
@@ -3352,7 +3137,7 @@ for thisTrials_sham in trials_sham:
     vividness.reset()
     If_No_Resp = event.BuilderKeyResponse()
     # keep track of which components have finished
-    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, vividness, If_No_Resp, cross, image_in, image_out, RT]
+    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, vividness, If_No_Resp]
     for thisComponent in trial1Components:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -3370,6 +3155,8 @@ for thisTrials_sham in trials_sham:
             empty_gray.tStart = t
             empty_gray.frameNStart = frameN  # exact frame index
             empty_gray.setAutoDraw(True)
+            win.callOnFlip(ns.sync)
+            win.callOnFlip(ns.send_event, '00')
         frameRemains = 0.0 + 1.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if empty_gray.status == STARTED and t >= frameRemains:
             empty_gray.setAutoDraw(False)
@@ -3380,6 +3167,8 @@ for thisTrials_sham in trials_sham:
             fixation_cross.tStart = t
             fixation_cross.frameNStart = frameN  # exact frame index
             fixation_cross.setAutoDraw(True)
+            win.callOnFlip(ns.sync)
+            win.callOnFlip(ns.send_event, '01')
         frameRemains = 1 + 1.5- win.monitorFramePeriod * 0.75  # most of one frame period left
         if fixation_cross.status == STARTED and t >= frameRemains:
             fixation_cross.setAutoDraw(False)
@@ -3390,9 +3179,13 @@ for thisTrials_sham in trials_sham:
             image.tStart = t
             image.frameNStart = frameN  # exact frame index
             image.setAutoDraw(True)
+            win.callOnFlip(ns.sync)
+            win.callOnFlip(ns.send_event, '02')
         frameRemains = 2.5 + 8.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image.status == STARTED and t >= frameRemains:
             image.setAutoDraw(False)
+            win.callOnFlip(ns.sync)
+            win.callOnFlip(ns.send_event, '03')
         # *n_objets* updates
         if (t >=10.5) and n_objets.status == NOT_STARTED:
             # keep track of start time/frame for later
@@ -3414,7 +3207,9 @@ for thisTrials_sham in trials_sham:
             reaction_time.status = STOPPED
         if reaction_time.status == STARTED:
             theseKeys = event.getKeys(keyList=['space'])
-            
+            if theseKeys == ['space']:  
+                win.callOnFlip(ns.sync)
+                win.callOnFlip(ns.send_event, '04')
             # check for quit:
             if "escape" in theseKeys:
                 endExpNow = True
@@ -3447,49 +3242,6 @@ for thisTrials_sham in trials_sham:
             if len(theseKeys) > 0:  # at least one key was pressed
                 # a response ends the routine
                 continueRoutine = False
-        # *cross* updates
-        if t >= 1 and cross.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            cross.tStart = t
-            cross.frameNStart = frameN  # exact frame index
-            cross.status = STARTED
-            win.callOnFlip(cross.setData, int(3))
-        frameRemains = 1 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if cross.status == STARTED and t >= frameRemains:
-            cross.status = STOPPED
-            win.callOnFlip(cross.setData, int(0))
-        # *image_in* updates
-        if t >= 2.5 and image_in.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            image_in.tStart = t
-            image_in.frameNStart = frameN  # exact frame index
-            image_in.status = STARTED
-            win.callOnFlip(image_in.setData, int(4))
-        frameRemains = 2.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if image_in.status == STARTED and t >= frameRemains:
-            image_in.status = STOPPED
-            win.callOnFlip(image_in.setData, int(0))
-        # *image_out* updates
-        if t >= 10.5 and image_out.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            image_out.tStart = t
-            image_out.frameNStart = frameN  # exact frame index
-            image_out.status = STARTED
-            win.callOnFlip(image_out.setData, int(5))
-        frameRemains = 10.5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-        if image_out.status == STARTED and t >= frameRemains:
-            image_out.status = STOPPED
-            win.callOnFlip(image_out.setData, int(0))
-        # *RT* updates
-        if (reaction_time==True) and RT.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            RT.tStart = t
-            RT.frameNStart = frameN  # exact frame index
-            RT.status = STARTED
-            win.callOnFlip(RT.setData, int(6))
-        if RT.status == STARTED and t >= (RT.tStart + 0.1):
-            RT.status = STOPPED
-            win.callOnFlip(RT.setData, int(0))
         
         # check if all components have finished
         if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -3523,14 +3275,6 @@ for thisTrials_sham in trials_sham:
     # store data for trials_sham (TrialHandler)
     trials_sham.addData('vividness.response', vividness.getRating())
     trials_sham.addData('vividness.rt', vividness.getRT())
-    if cross.status == STARTED:
-        win.callOnFlip(cross.setData, int(0))
-    if image_in.status == STARTED:
-        win.callOnFlip(image_in.setData, int(0))
-    if image_out.status == STARTED:
-        win.callOnFlip(image_out.setData, int(0))
-    if RT.status == STARTED:
-        win.callOnFlip(RT.setData, int(0))
     # the Routine "trial1" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     thisExp.nextEntry()
@@ -3864,7 +3608,7 @@ continueRoutine = True
 # update component parameters for each repeat
 key_resp_10 = event.BuilderKeyResponse()
 # keep track of which components have finished
-Resting_stateComponents = [fix_resting_state, key_resp_10, RS01_in, RS01_out]
+Resting_stateComponents = [fix_resting_state, key_resp_10]
 for thisComponent in Resting_stateComponents:
     if hasattr(thisComponent, 'status'):
         thisComponent.status = NOT_STARTED
@@ -3882,9 +3626,13 @@ while continueRoutine:
         fix_resting_state.tStart = t
         fix_resting_state.frameNStart = frameN  # exact frame index
         fix_resting_state.setAutoDraw(True)
-    frameRemains = 0.0 + 5- win.monitorFramePeriod * 0.75  # most of one frame period left
+        win.callOnFlip(ns.sync)
+        win.callOnFlip(ns.send_event, 'RS20')
+    frameRemains = 0.0 + 180- win.monitorFramePeriod * 0.75  # most of one frame period left
     if fix_resting_state.status == STARTED and t >= frameRemains:
         fix_resting_state.setAutoDraw(False)
+        win.callOnFlip(ns.sync)
+        win.callOnFlip(ns.send_event, 'RS21')
     
     # *key_resp_10* updates
     if t >= 0.0 and key_resp_10.status == NOT_STARTED:
@@ -3906,28 +3654,6 @@ while continueRoutine:
             key_resp_10.rt = key_resp_10.clock.getTime()
             # a response ends the routine
             continueRoutine = False
-    # *RS01_in* updates
-    if t >= 0.0 and RS01_in.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        RS01_in.tStart = t
-        RS01_in.frameNStart = frameN  # exact frame index
-        RS01_in.status = STARTED
-        win.callOnFlip(RS01_in.setData, int(1))
-    frameRemains = 0.0 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-    if RS01_in.status == STARTED and t >= frameRemains:
-        RS01_in.status = STOPPED
-        win.callOnFlip(RS01_in.setData, int(0))
-    # *RS01_out* updates
-    if t >= 5 and RS01_out.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        RS01_out.tStart = t
-        RS01_out.frameNStart = frameN  # exact frame index
-        RS01_out.status = STARTED
-        win.callOnFlip(RS01_out.setData, int(2))
-    frameRemains = 5 + 0.1- win.monitorFramePeriod * 0.75  # most of one frame period left
-    if RS01_out.status == STARTED and t >= frameRemains:
-        RS01_out.status = STOPPED
-        win.callOnFlip(RS01_out.setData, int(0))
     
     # check if all components have finished
     if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -3957,10 +3683,6 @@ thisExp.addData('key_resp_10.keys',key_resp_10.keys)
 if key_resp_10.keys != None:  # we had a response
     thisExp.addData('key_resp_10.rt', key_resp_10.rt)
 thisExp.nextEntry()
-if RS01_in.status == STARTED:
-    win.callOnFlip(RS01_in.setData, int(0))
-if RS01_out.status == STARTED:
-    win.callOnFlip(RS01_out.setData, int(0))
 # the Routine "Resting_state" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
