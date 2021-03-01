@@ -20,7 +20,7 @@ from numpy import (sin, cos, tan, log, log10, pi, average,
 from numpy.random import random, randint, normal, shuffle
 import os  # handy system and path functions
 import sys  # to get file system encoding
-
+import time
 # Dictionary for triggers
 
 MEG_SETTINGS = {
@@ -870,11 +870,11 @@ while continueRoutine:
         fix_resting_state.tStart = t
         fix_resting_state.frameNStart = frameN  # exact frame index
         fix_resting_state.setAutoDraw(True)
-        win.callOnFlip(send_data, port, MEG_SETTINGS{'RS_start'})
+        win.callOnFlip(send_data, port, MEG_SETTINGS['RS_start'])
     frameRemains = 0.0 + 5- win.monitorFramePeriod * 0.75  # most of one frame period left
     if fix_resting_state.status == STARTED and t >= frameRemains:
         fix_resting_state.setAutoDraw(False)
-        win.callOnFlip(send_data, port, MEG_SETTINGS{'RS_stop'})
+        win.callOnFlip(send_data, port, MEG_SETTINGS['RS_stop'])
     # *key_resp_10* updates
     if t >= 0.0 and key_resp_10.status == NOT_STARTED:
         # keep track of start time/frame for later
@@ -1298,7 +1298,7 @@ for thisTrial in trials:
             fixation_cross.tStart = t
             fixation_cross.frameNStart = frameN  # exact frame index
             fixation_cross.setAutoDraw(True)
-            win.callOnFlip(send_data, port, MEG_SETTINGS{'cross'})
+            win.callOnFlip(send_data, port, MEG_SETTINGS['cross'])
         frameRemains = 1 + 1.5- win.monitorFramePeriod * 0.75  # most of one frame period left
         if fixation_cross.status == STARTED and t >= frameRemains:
             fixation_cross.setAutoDraw(False)
@@ -1309,11 +1309,11 @@ for thisTrial in trials:
             image.tStart = t
             image.frameNStart = frameN  # exact frame index
             image.setAutoDraw(True)
-            win.callOnFlip(send_data, port, MEG_SETTINGS{'im_start'})
+            win.callOnFlip(send_data, port, MEG_SETTINGS['im_start'])
         frameRemains = 2.5 + 8.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image.status == STARTED and t >= frameRemains:
             image.setAutoDraw(False)
-            win.callOnFlip(send_data, port, MEG_SETTINGS{'im_stop'})
+            win.callOnFlip(send_data, port, MEG_SETTINGS['im_stop'])
         # *n_objets* updates
         if (t >=10.5) and n_objets.status == NOT_STARTED:
             # keep track of start time/frame for later
@@ -1336,7 +1336,7 @@ for thisTrial in trials:
         if reaction_time.status == STARTED:
             theseKeys = event.getKeys(keyList=['5'])
             if theseKeys == ['5']:
-                win.callOnFlip(send_data, port, MEG_SETTINGS{'resp'})
+                win.callOnFlip(send_data, port, MEG_SETTINGS['resp'])
             # check for quit:
             if "escape" in theseKeys:
                 endExpNow = True
