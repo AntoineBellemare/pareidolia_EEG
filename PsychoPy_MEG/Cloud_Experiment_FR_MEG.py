@@ -22,6 +22,7 @@ import os  # handy system and path functions
 import sys  # to get file system encoding
 import time
 import pandas as pd
+from psychopy import parallel
 
 
 # Activate parallel port
@@ -29,10 +30,10 @@ import pandas as pd
 port = parallel.ParallelPort(address='/dev/parport0')
 def send_data(port, data):
     port.setData(data)
-    time.sleep(0.001)
+    time.sleep(0.1)
     port.setData(0)  # reset
 # Ensure that relative paths start from the same directory as this script
-_thisDir = os.path.dirname(os.path.abspath(__file__)).decode(sys.getfilesystemencoding())
+_thisDir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(_thisDir)
 
 # Store info about the experiment session
@@ -867,11 +868,11 @@ while continueRoutine:
         fix_resting_state.tStart = t
         fix_resting_state.frameNStart = frameN  # exact frame index
         fix_resting_state.setAutoDraw(True)
-        win.callOnFlip(send_data, port, '1')
-    frameRemains = 0.0 + 180- win.monitorFramePeriod * 0.75  # most of one frame period left
+        win.callOnFlip(send_data, port, int("00000001", 2))
+    frameRemains = 0.0 + 10- win.monitorFramePeriod * 0.75  # most of one frame period left
     if fix_resting_state.status == STARTED and t >= frameRemains:
         fix_resting_state.setAutoDraw(False)
-        win.callOnFlip(send_data, port, '2')
+        win.callOnFlip(send_data, port, int("00000010", 2))
     
     # *key_resp_10* updates
     if t >= 0.0 and key_resp_10.status == NOT_STARTED:
