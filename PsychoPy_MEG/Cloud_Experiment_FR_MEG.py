@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 This experiment was created using PsychoPy2 Experiment Builder (v1.90.3),
-    on February 28, 2020, at 14:18
+    on March 02, 2021, at 16:42
 If you publish work using this script please cite the PsychoPy publications:
     Peirce, JW (2007) PsychoPy - Psychophysics software in Python.
         Journal of Neuroscience Methods, 162(1-2), 8-13.
@@ -21,17 +21,29 @@ from numpy.random import random, randint, normal, shuffle
 import os  # handy system and path functions
 import sys  # to get file system encoding
 import time
-import pandas as pd
-from psychopy import parallel
 
+MEG_SETTINGS = {
+'RS_start':int('00000001', 2),
+'RS_stop':int('00000010', 2),
+'cross':int('00000011', 2),
+'im_start':int('00000100', 2),
+'im_stop':int('00000101', 2),
+'resp':int('00000110', 2),
+'cross_s':int('00000111', 2),
+'im_start_s':int('00001000', 2),
+'im_stop_s':int('00001010', 2),
+'resp_s':int('00001011', 2),
+}
 
 # Activate parallel port
-
-port = parallel.ParallelPort(address='/dev/parport0')
+#port = parallel.ParallelPort(address='/dev/parport0')
+port = []
 def send_data(port, data):
-    port.setData(data)
-    time.sleep(0.1)
-    port.setData(0)  # reset
+    #port.setData(data)
+    print(data)
+    time.sleep(0.001)
+    #port.setData(0)  # reset
+
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(_thisDir)
@@ -78,41 +90,28 @@ else:
 # Initialize components for Routine "Instructions"
 InstructionsClock = core.Clock()
 Instruction = visual.TextStim(win=win, name='Instruction',
-    text=u"Bienvenue \xe0 cette exp\xe9rience sur la par\xe9idolie.\nL'exp\xe9rience se divise en quatre blocs.\nChaque bloc sera s\xe9par\xe9 d'une question sur votre \xe9tat de fatigue mentale.\nVous aurez l'occasion, entre chaque bloc, de prendre quelques minutes de repos.\n\nAppuyez sur la barre d'espacement.\n\n",
-    font='Arial',
+    text=u"Bienvenue \xe0 cette exp\xe9rience sur la par\xe9idolie.\nL'exp\xe9rience se divise en quatre blocs.\nChaque bloc sera s\xe9par\xe9 d'une question sur votre \xe9tat de fatigue mentale.\nVous aurez l'occasion, entre chaque bloc, de prendre quelques minutes de repos.\n\nAppuyez avec le pouce de votre main gauche.\n\n",
+    font=u'Arial',
     pos=[0, 0], height=0.05, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "Instructions2"
 Instructions2Clock = core.Clock()
-instructions2 = visual.TextStim(win=win, name='instructions2',
-    text=u"T\xe2che:\n\nDes images de nuages informatiques vous seront pr\xe9sent\xe9es.\nVotre t\xe2che consistera \xe0 percevoir le plus grand nombre de formes figuratives dans chaque image.\nLorsque vous aurez d\xe9tect\xe9 une premi\xe8re forme figurative, vous devrez appuyer sur la barre d'espacement.\nVous aurez par la suite \xe0 continuer votre recherche de formes figuratives pendant toute la pr\xe9sentation de l'image.\nApr\xe8s chaque image, il vous sera demand\xe9 le nombre total de formes per\xe7ues.\nSi vous n'avez per\xe7u aucune forme lors de la pr\xe9sentation d'une image, appuyez sur ''q'' pour passer \xe0 l'image suivante \nSi toutefois vous r\xe9pondez \xe0 la question sur le nombre de formes per\xe7ues, il vous sera demand\xe9 d'indiquer la vividit\xe9 de votre perception. \n\n\xc0 la fin de l'exp\xe9rience, les images pour lesquelles vous avez r\xe9pondu avoir per\xe7u une forme figurative fortement vivide vous seront pr\xe9sent\xe9es \xe0 nouveau\nafin que vous partagiez vos perceptions avec l'exp\xe9rimentateur.\n\nAppuyez sur la barre d'espacement pour continuer",
-    font='Arial',
+fatigueinstructions2 = visual.TextStim(win=win, name='fatigueinstructions2',
+    text=u"T\xe2che:\n\nDes images de nuages informatiques vous seront pr\xe9sent\xe9es.\nVotre t\xe2che consistera \xe0 percevoir le plus grand nombre de formes figuratives dans chaque image.\nLorsque vous aurez d\xe9tect\xe9 une premi\xe8re forme figurative, vous devrez appuyer avec votre pouce.\n\nVous aurez par la suite \xe0 continuer votre recherche de formes figuratives pendant toute la pr\xe9sentation de l'image.\nApr\xe8s chaque image, il vous sera demand\xe9 le nombre total de formes per\xe7ues.\nSi vous n'avez per\xe7u aucune forme lors de la pr\xe9sentation d'une image, appuyez avec un de vos petits doigts pour passer \xe0 l'image suivante \nAvant chaque bloc, il vous sera indiqu\xe9 si vous devez r\xe9pondre avec le pouce gauche ou le pouce droit pour le bloc qui suivra. \n\n\xc0 la fin de l'exp\xe9rience, les images pour lesquelles vous avez r\xe9pondu avoir per\xe7u plusieurs formes figuratives vous seront pr\xe9sent\xe9es \xe0 nouveau\nafin que vous partagiez vos perceptions avec l'exp\xe9rimentateur.\n\nVous commencerez par un bloc d'essai pour vous familiariser avec la t\xe2che.\n\nVeuillez appuyer avec le pouce gauche pour l'enti\xe8ret\xe9 de ce bloc d'essai.\n\n\nBonne exp\xe9rience!\n\n",
+    font=u'Arial',
     pos=(0, 0), height=0.05, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
-
-# Initialize components for Routine "Instruction3"
-Instruction3Clock = core.Clock()
-text_4 = visual.TextStim(win=win, name='text_4',
-    text=u"La vividit\xe9 r\xe9f\xe8re \xe0 la clart\xe9 de l'image mentale.\nSi l'image est vivide, cela signifie qu'elle est tr\xe8s claire dans votre esprit et facilement rem\xe9morable.\nSi vous avez per\xe7u plusieurs formes, Veuillez r\xe9pondre \xe0 la question sur la vividit\xe9 en vous r\xe9f\xe9rant \xe0 la forme la plus vivide.\n\nVous commencerez par un bloc d'essai pour vous familiariser avec la t\xe2che.\n\nVeuillez appuyer sur la barre d'espacement pour r\xe9pondre \xe0 la premi\xe8re question sur votre fatigue mentale.\n\nBonne exp\xe9rience!",
-    font='Arial',
-    pos=(0, 0), height=0.05, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
-    depth=0.0);
-
-# Initialize components for Routine "Mental_fatigue"
-Mental_fatigueClock = core.Clock()
-Fatigue = visual.RatingScale(win=win, name='Fatigue', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=10, labels=[u'\xc9tat de fatigue absolu', u" \xc9tat d'\xe9veil absolu"], scale='Veuillez indiquer votre niveau de fatigue mentale')
 
 # Initialize components for Routine "Resting_state_instructions"
 Resting_state_instructionsClock = core.Clock()
 Resting = visual.TextStim(win=win, name='Resting',
-    text=u"Avant de d\xe9buter l'exp\xe9rience,\nnous allons vous demander de rester immobile\npendant 3 min, les yeux ouverts.\nVous n'avez aucune t\xe2che particuli\xe8re \xe0 effectuer\npendant ces 3 minutes, mis \xe0 part garder votre\nregard fix\xe9 sur la croix de fixation.\n\nIl vous sera demand\xe9 de faire le m\xeame exercice\n\xe0 la fin de l'exp\xe9rience.\n\nAppuyez sur la barre d'espacement pour d\xe9buter le 3 minutes",
-    font='Arial',
+    text=u"Avant de d\xe9buter l'exp\xe9rience,\nnous allons vous demander de rester immobile\npendant 3 min, les yeux ouverts.\nVous n'avez aucune t\xe2che particuli\xe8re \xe0 effectuer\npendant ces 3 minutes, mis \xe0 part garder votre\nregard fix\xe9 sur la croix de fixation.\n\nIl vous sera demand\xe9 de faire le m\xeame exercice\n\xe0 la fin de l'exp\xe9rience.\n\nAppuyez avec vote pouce gauche pour d\xe9buter le bloc de 3 minutes",
+    font=u'Arial',
     pos=(0, 0), height=0.05, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "Resting_state"
@@ -128,7 +127,7 @@ fix_resting_state = visual.ImageStim(
 # Initialize components for Routine "Start_pratique"
 Start_pratiqueClock = core.Clock()
 text_3 = visual.TextStim(win=win, name='text_3',
-    text=u"Le bloc de pratique est constitu\xe9 de 10 essais.\nVeuillez appuyer sur la barre d'espacement pour commencer le bloc de pratique.\n",
+    text=u"Le bloc de pratique est constitu\xe9 de 10 essais.\nVeuillez appuyer avec le pouce gauche pour commencer le bloc de pratique.\nVous aurez \xe0 utiliser le pouce gauche pour signaler \nla d\xe9tection d'un objet \npour l'enti\xe8ret\xe9 de ce bloc, ",
     font='Arial',
     pos=(0, 0), height=0.05, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
@@ -158,12 +157,11 @@ image = visual.ImageStim(
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-2.0)
 n_objets = visual.RatingScale(win=win, name='n_objets', marker='triangle', size=1.0, pos=[0.0, 0.0], low=1, high=5, labels=['1', ' 5 et plus'], scale=u"Veuillez indiquer le nombre d'objets significatifs per\xe7us", disappear=True)
-vividness = visual.RatingScale(win=win, name='vividness', marker='triangle', size=1, pos=[0.0, 0.0], low=1, high=5, labels=[u'Tr\xe8s peu vivide', u' Fortement vivide'], scale=u'Veuillez indiquer la vividit\xe9 de votre perception', disappear=True)
 
 # Initialize components for Routine "Startx"
 StartxClock = core.Clock()
 text = visual.TextStim(win=win, name='text',
-    text=u"Appuyez sur la barre d'espacement \npour commencer l'exp\xe9rience\n",
+    text=u"Vous aurez \xe0 utiliser le pouce droit pour signaler \nla d\xe9tection d'un objet pour l'enti\xe8ret\xe9 de ce bloc, \n\n\nAppuyez avec le pouce droit\npour commencer l'exp\xe9rience.\n\n",
     font='Arial',
     pos=(0, 0), height=0.05, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
@@ -193,7 +191,6 @@ image = visual.ImageStim(
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-2.0)
 n_objets = visual.RatingScale(win=win, name='n_objets', marker='triangle', size=1.0, pos=[0.0, 0.0], low=1, high=5, labels=['1', ' 5 et plus'], scale=u"Veuillez indiquer le nombre d'objets significatifs per\xe7us", disappear=True)
-vividness = visual.RatingScale(win=win, name='vividness', marker='triangle', size=1, pos=[0.0, 0.0], low=1, high=5, labels=[u'Tr\xe8s peu vivide', u' Fortement vivide'], scale=u'Veuillez indiquer la vividit\xe9 de votre perception', disappear=True)
 
 # Initialize components for Routine "Fin_bloc"
 Fin_blocClock = core.Clock()
@@ -203,37 +200,11 @@ text_7 = visual.TextStim(win=win, name='text_7',
     pos=(0, 0), height=0.05, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
-
-# Initialize components for Routine "Mental_fatigue"
-Mental_fatigueClock = core.Clock()
-Fatigue = visual.RatingScale(win=win, name='Fatigue', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=10, labels=[u'\xc9tat de fatigue absolu', u" \xc9tat d'\xe9veil absolu"], scale='Veuillez indiquer votre niveau de fatigue mentale')
-
-# Initialize components for Routine "Flow"
-FlowClock = core.Clock()
-text_6 = visual.TextStim(win=win, name='text_6',
-    text=u"Court questionnaire sur l'\xe9tat de flow\n\nVeuillez r\xe9pondre aux questions suivantes concernant votre exp\xe9rience du bloc que vous venez de terminer.\n\n1 = Total d\xe9saccord  //  7 = Total accord\n\nAppuyez sur la barre d'espacement pour commencer",
-    font='Arial',
-    pos=(0, 0), height=0.05, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
-    depth=0.0);
-
-# Initialize components for Routine "Flow_questions"
-Flow_questionsClock = core.Clock()
-Flow01 = visual.RatingScale(win=win, name='Flow01', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je ressens le parfait niveau de d\xe9fi', disappear=True)
-Flow02 = visual.RatingScale(win=win, name='Flow02', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Mes pens\xe9es/actions se d\xe9roulent fluidement', disappear=True)
-Flow03 = visual.RatingScale(win=win, name='Flow03', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je ne vois pas le temps pass\xe9', disappear=True)
-Flow04 = visual.RatingScale(win=win, name='Flow04', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u"Je n'ai pas de difficult\xe9 \xe0 me concentrer", disappear=True)
-Flow05 = visual.RatingScale(win=win, name='Flow05', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Mon esprit est compl\xe8tement clair', disappear=True)
-Flow06 = visual.RatingScale(win=win, name='Flow06', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je suis totalement absorb\xe9 par ce que je fais', disappear=True)
-Flow07 = visual.RatingScale(win=win, name='Flow07', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u"Les bonnes pens\xe9es/mouvements se produisent d'eux-m\xeames", disappear=True)
-Flow08 = visual.RatingScale(win=win, name='Flow08', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je sais ce que je dois faire \xe0 chaque \xe9tape', disappear=True)
-Flow09 = visual.RatingScale(win=win, name='Flow09', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je sens que tout est sous contr\xf4le', disappear=True)
-Flow10 = visual.RatingScale(win=win, name='Flow10', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[''], scale=u'Je suis compl\xe8tement perdu dans mes pens\xe9es')
 
 # Initialize components for Routine "StartXX"
 StartXXClock = core.Clock()
 text_2 = visual.TextStim(win=win, name='text_2',
-    text=u"Appuyez sur la barre d'espacement \npour continuer l'exp\xe9rience",
+    text=u"Vous aurez \xe0 utiliser le pouce gauche pour signaler \nla d\xe9tection d'un objet pour l'enti\xe8ret\xe9 de ce bloc, \n\nAppuyez avec le pouce gauche\npour continuer l'exp\xe9rience.",
     font='Arial',
     pos=(0, 0), height=0.05, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
@@ -263,7 +234,6 @@ image = visual.ImageStim(
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-2.0)
 n_objets = visual.RatingScale(win=win, name='n_objets', marker='triangle', size=1.0, pos=[0.0, 0.0], low=1, high=5, labels=['1', ' 5 et plus'], scale=u"Veuillez indiquer le nombre d'objets significatifs per\xe7us", disappear=True)
-vividness = visual.RatingScale(win=win, name='vividness', marker='triangle', size=1, pos=[0.0, 0.0], low=1, high=5, labels=[u'Tr\xe8s peu vivide', u' Fortement vivide'], scale=u'Veuillez indiquer la vividit\xe9 de votre perception', disappear=True)
 
 # Initialize components for Routine "Fin_bloc"
 Fin_blocClock = core.Clock()
@@ -274,36 +244,10 @@ text_7 = visual.TextStim(win=win, name='text_7',
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
-# Initialize components for Routine "Mental_fatigue"
-Mental_fatigueClock = core.Clock()
-Fatigue = visual.RatingScale(win=win, name='Fatigue', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=10, labels=[u'\xc9tat de fatigue absolu', u" \xc9tat d'\xe9veil absolu"], scale='Veuillez indiquer votre niveau de fatigue mentale')
-
-# Initialize components for Routine "Flow"
-FlowClock = core.Clock()
-text_6 = visual.TextStim(win=win, name='text_6',
-    text=u"Court questionnaire sur l'\xe9tat de flow\n\nVeuillez r\xe9pondre aux questions suivantes concernant votre exp\xe9rience du bloc que vous venez de terminer.\n\n1 = Total d\xe9saccord  //  7 = Total accord\n\nAppuyez sur la barre d'espacement pour commencer",
-    font='Arial',
-    pos=(0, 0), height=0.05, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
-    depth=0.0);
-
-# Initialize components for Routine "Flow_questions"
-Flow_questionsClock = core.Clock()
-Flow01 = visual.RatingScale(win=win, name='Flow01', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je ressens le parfait niveau de d\xe9fi', disappear=True)
-Flow02 = visual.RatingScale(win=win, name='Flow02', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Mes pens\xe9es/actions se d\xe9roulent fluidement', disappear=True)
-Flow03 = visual.RatingScale(win=win, name='Flow03', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je ne vois pas le temps pass\xe9', disappear=True)
-Flow04 = visual.RatingScale(win=win, name='Flow04', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u"Je n'ai pas de difficult\xe9 \xe0 me concentrer", disappear=True)
-Flow05 = visual.RatingScale(win=win, name='Flow05', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Mon esprit est compl\xe8tement clair', disappear=True)
-Flow06 = visual.RatingScale(win=win, name='Flow06', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je suis totalement absorb\xe9 par ce que je fais', disappear=True)
-Flow07 = visual.RatingScale(win=win, name='Flow07', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u"Les bonnes pens\xe9es/mouvements se produisent d'eux-m\xeames", disappear=True)
-Flow08 = visual.RatingScale(win=win, name='Flow08', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je sais ce que je dois faire \xe0 chaque \xe9tape', disappear=True)
-Flow09 = visual.RatingScale(win=win, name='Flow09', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je sens que tout est sous contr\xf4le', disappear=True)
-Flow10 = visual.RatingScale(win=win, name='Flow10', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[''], scale=u'Je suis compl\xe8tement perdu dans mes pens\xe9es')
-
-# Initialize components for Routine "StartXX"
-StartXXClock = core.Clock()
-text_2 = visual.TextStim(win=win, name='text_2',
-    text=u"Appuyez sur la barre d'espacement \npour continuer l'exp\xe9rience",
+# Initialize components for Routine "start_xxx"
+start_xxxClock = core.Clock()
+text_8 = visual.TextStim(win=win, name='text_8',
+    text=u"Vous aurez \xe0 utiliser le pouce droit pour signaler \nla d\xe9tection d'un objet pour l'enti\xe8ret\xe9 de ce bloc, \n\nAppuyez avec le pouce droit\npour continuer l'exp\xe9rience.",
     font='Arial',
     pos=(0, 0), height=0.05, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
@@ -332,55 +276,37 @@ image = visual.ImageStim(
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-2.0)
-n_objets = visual.RatingScale(win=win, name='n_objets', marker='triangle', size=1.0, pos=[0.0, 0.0], low=1, high=5, labels=['1', ' 5 et plus'], scale=u"Veuillez indiquer le nombre d'objets significatifs per\xe7us", disappear=True)
-vividness = visual.RatingScale(win=win, name='vividness', marker='triangle', size=1, pos=[0.0, 0.0], low=1, high=5, labels=[u'Tr\xe8s peu vivide', u' Fortement vivide'], scale=u'Veuillez indiquer la vividit\xe9 de votre perception', disappear=True)
-
+n_objets = visual.RatingScale(win=win, name='n_objets', marker=u'triangle', 
+                                size=1.0, pos=[0.0, 0.0], low=1, high=5, 
+                                labels=[u'1', u' 5 et plus'], 
+                                scale=u"Veuillez indiquer le nombre d'objets significatifs per\xe7us", 
+                                disappear=True, respKeys = (), leftKeys = '5', rightKeys = '6', acceptKeys = ['4', '7'],
+                                markerStart = '1', skipKeys=['1', '0'])
 # Initialize components for Routine "Fin_bloc"
 Fin_blocClock = core.Clock()
 text_7 = visual.TextStim(win=win, name='text_7',
-    text=u"Vous venez de terminer le bloc.\n\nAppuyez la sur la barre d'espacement pour r\xe9pondre \xe0 quelques questions avant de prendre votre pause.",
+    text=u"Vous venez de terminer le bloc.\n\nAppuyez avec le pouce de votre choix pour continuer vers le prochain bloc.",
     font='Arial',
     pos=(0, 0), height=0.05, wrapWidth=None, ori=0, 
     color='white', colorSpace='rgb', opacity=1,
     depth=0.0);
-
-# Initialize components for Routine "Mental_fatigue"
-Mental_fatigueClock = core.Clock()
-Fatigue = visual.RatingScale(win=win, name='Fatigue', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=10, labels=[u'\xc9tat de fatigue absolu', u" \xc9tat d'\xe9veil absolu"], scale='Veuillez indiquer votre niveau de fatigue mentale')
-
-# Initialize components for Routine "Flow"
-FlowClock = core.Clock()
-text_6 = visual.TextStim(win=win, name='text_6',
-    text=u"Court questionnaire sur l'\xe9tat de flow\n\nVeuillez r\xe9pondre aux questions suivantes concernant votre exp\xe9rience du bloc que vous venez de terminer.\n\n1 = Total d\xe9saccord  //  7 = Total accord\n\nAppuyez sur la barre d'espacement pour commencer",
-    font='Arial',
-    pos=(0, 0), height=0.05, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
-    depth=0.0);
-
-# Initialize components for Routine "Flow_questions"
-Flow_questionsClock = core.Clock()
-Flow01 = visual.RatingScale(win=win, name='Flow01', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je ressens le parfait niveau de d\xe9fi', disappear=True)
-Flow02 = visual.RatingScale(win=win, name='Flow02', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Mes pens\xe9es/actions se d\xe9roulent fluidement', disappear=True)
-Flow03 = visual.RatingScale(win=win, name='Flow03', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je ne vois pas le temps pass\xe9', disappear=True)
-Flow04 = visual.RatingScale(win=win, name='Flow04', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u"Je n'ai pas de difficult\xe9 \xe0 me concentrer", disappear=True)
-Flow05 = visual.RatingScale(win=win, name='Flow05', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Mon esprit est compl\xe8tement clair', disappear=True)
-Flow06 = visual.RatingScale(win=win, name='Flow06', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je suis totalement absorb\xe9 par ce que je fais', disappear=True)
-Flow07 = visual.RatingScale(win=win, name='Flow07', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u"Les bonnes pens\xe9es/mouvements se produisent d'eux-m\xeames", disappear=True)
-Flow08 = visual.RatingScale(win=win, name='Flow08', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je sais ce que je dois faire \xe0 chaque \xe9tape', disappear=True)
-Flow09 = visual.RatingScale(win=win, name='Flow09', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je sens que tout est sous contr\xf4le', disappear=True)
-Flow10 = visual.RatingScale(win=win, name='Flow10', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[''], scale=u'Je suis compl\xe8tement perdu dans mes pens\xe9es')
 
 # Initialize components for Routine "Redondance"
 RedondanceClock = core.Clock()
-Redondance_question = visual.RatingScale(win=win, name='Redondance_question', marker='triangle', size=0.8, pos=[0.0, -0.4], low=1, high=7, labels=[u'Presque toujours la m\xeame cat\xe9gorie', u' Cat\xe9gories vari\xe9es'], scale=u"Pour l'ensemble des trois premiers blocs, veuillez indiquer \xe0 quel point vos perceptions \xe9taient diversifi\xe9es")
+Redondance_question = visual.RatingScale(win=win, name='Redondance_question', marker=u'triangle', 
+                                        size=0.8, pos=[0.0, -0.4], low=1, high=7, 
+                                        labels=[u'Presque toujours la m\xeame cat\xe9gorie', u' Cat\xe9gories vari\xe9es'], 
+                                        scale=u"Pour l'ensemble des trois premiers blocs, veuillez indiquer \xe0 quel point vos perceptions \xe9taient diversifi\xe9es",
+                                        disappear=True, respKeys = (), leftKeys = '5', rightKeys = '6', acceptKeys = ['4', '7'],
+                                        markerStart = '4')
 
 # Initialize components for Routine "Instructions_sham"
 Instructions_shamClock = core.Clock()
 instructions_sham = visual.TextStim(win=win, name='instructions_sham',
-    text=u"Au courant des trois premiers blocs que vous venez de compl\xe9ter, \nun algorithme d\u2019apprentissage-machine s\u2019est entra\xeen\xe9 \xe0 diff\xe9rencier l\nes images pour lesquelles vous rapportiez une forte par\xe9idolie \nde celles o\xf9 la par\xe9idolie \xe9tait inexistante ou faible. \nPour le dernier bloc, cet algorithme d'apprentissage-machine utilisera \nvotre activit\xe9 c\xe9r\xe9brale afin de cr\xe9er en temps r\xe9el \nles images de nuages g\xe9n\xe9ratifs de mani\xe8re \xe0 maximiser la par\xe9idolie. \n\nAppuyez sur la barre d'espacement afin de d\xe9buter le bloc.",
-    font='Arial',
+    text=u"Au courant des trois premiers blocs que vous venez de compl\xe9ter, \nun algorithme d\u2019apprentissage-machine s\u2019est entra\xeen\xe9 \xe0 diff\xe9rencier l\nes images pour lesquelles vous rapportiez une forte par\xe9idolie \nde celles o\xf9 la par\xe9idolie \xe9tait inexistante ou faible. \nPour le dernier bloc, cet algorithme d'apprentissage-machine utilisera \nvotre activit\xe9 c\xe9r\xe9brale afin de cr\xe9er en temps r\xe9el \nles images de nuages g\xe9n\xe9ratifs de mani\xe8re \xe0 maximiser la par\xe9idolie. \n\nVous aurez \xe0 utiliser le pouce gauche pour signaler \nla d\xe9tection d'un objet ainsi que pour valider chacune de vos r\xe9ponses\npour l'enti\xe8ret\xe9 de ce bloc, \nAppuyez avec le pouce gauche afin de d\xe9buter le bloc.",
+    font=u'Arial',
     pos=(0, 0), height=0.05, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "trial1"
@@ -406,42 +332,19 @@ image = visual.ImageStim(
     color=[1,1,1], colorSpace='rgb', opacity=1,
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-2.0)
-n_objets = visual.RatingScale(win=win, name='n_objets', marker='triangle', size=1.0, pos=[0.0, 0.0], low=1, high=5, labels=['1', ' 5 et plus'], scale=u"Veuillez indiquer le nombre d'objets significatifs per\xe7us", disappear=True)
-vividness = visual.RatingScale(win=win, name='vividness', marker='triangle', size=1, pos=[0.0, 0.0], low=1, high=5, labels=[u'Tr\xe8s peu vivide', u' Fortement vivide'], scale=u'Veuillez indiquer la vividit\xe9 de votre perception', disappear=True)
-
-# Initialize components for Routine "Mental_fatigue"
-Mental_fatigueClock = core.Clock()
-Fatigue = visual.RatingScale(win=win, name='Fatigue', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=10, labels=[u'\xc9tat de fatigue absolu', u" \xc9tat d'\xe9veil absolu"], scale='Veuillez indiquer votre niveau de fatigue mentale')
-
-# Initialize components for Routine "Flow"
-FlowClock = core.Clock()
-text_6 = visual.TextStim(win=win, name='text_6',
-    text=u"Court questionnaire sur l'\xe9tat de flow\n\nVeuillez r\xe9pondre aux questions suivantes concernant votre exp\xe9rience du bloc que vous venez de terminer.\n\n1 = Total d\xe9saccord  //  7 = Total accord\n\nAppuyez sur la barre d'espacement pour commencer",
-    font='Arial',
-    pos=(0, 0), height=0.05, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
-    depth=0.0);
-
-# Initialize components for Routine "Flow_questions"
-Flow_questionsClock = core.Clock()
-Flow01 = visual.RatingScale(win=win, name='Flow01', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je ressens le parfait niveau de d\xe9fi', disappear=True)
-Flow02 = visual.RatingScale(win=win, name='Flow02', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Mes pens\xe9es/actions se d\xe9roulent fluidement', disappear=True)
-Flow03 = visual.RatingScale(win=win, name='Flow03', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je ne vois pas le temps pass\xe9', disappear=True)
-Flow04 = visual.RatingScale(win=win, name='Flow04', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u"Je n'ai pas de difficult\xe9 \xe0 me concentrer", disappear=True)
-Flow05 = visual.RatingScale(win=win, name='Flow05', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Mon esprit est compl\xe8tement clair', disappear=True)
-Flow06 = visual.RatingScale(win=win, name='Flow06', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je suis totalement absorb\xe9 par ce que je fais', disappear=True)
-Flow07 = visual.RatingScale(win=win, name='Flow07', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u"Les bonnes pens\xe9es/mouvements se produisent d'eux-m\xeames", disappear=True)
-Flow08 = visual.RatingScale(win=win, name='Flow08', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je sais ce que je dois faire \xe0 chaque \xe9tape', disappear=True)
-Flow09 = visual.RatingScale(win=win, name='Flow09', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[u'Total d\xe9saccord', u' Total accord'], scale=u'Je sens que tout est sous contr\xf4le', disappear=True)
-Flow10 = visual.RatingScale(win=win, name='Flow10', marker='triangle', size=1.0, pos=[0.0, -0.4], low=1, high=7, labels=[''], scale=u'Je suis compl\xe8tement perdu dans mes pens\xe9es')
-
+n_objets = visual.RatingScale(win=win, name='n_objets', marker=u'triangle', 
+                                size=1.0, pos=[0.0, 0.0], low=1, high=5, 
+                                labels=[u'1', u' 5 et plus'], 
+                                scale=u"Veuillez indiquer le nombre d'objets significatifs per\xe7us", 
+                                disappear=True, respKeys = (), leftKeys = '5', rightKeys = '6', acceptKeys = ['4', '7'],
+                                markerStart = '1', skipKeys=['1', '0'])
 # Initialize components for Routine "Resting_state_instructions2"
 Resting_state_instructions2Clock = core.Clock()
 resting_instructions_end = visual.TextStim(win=win, name='resting_instructions_end',
-    text=u"Nous allons maintenant vous demander\nde rester immobile pendant 3 minutes\nde la m\xeame fa\xe7on que lorsqu'au d\xe9but de\nl'exp\xe9rience, en fixant la croix au centre de\nl'\xe9cran et en ne faisant aucune t\xe2che particuli\xe8re",
-    font='Arial',
+    text=u"Nous allons maintenant vous demander\nde rester immobile pendant 3 minutes\nde la m\xeame fa\xe7on que lorsqu'au d\xe9but de\nl'exp\xe9rience, en fixant la croix au centre de\nl'\xe9cran et en ne faisant aucune t\xe2che particuli\xe8re.\n\nAppuyez avec le pouce de votre choix pour commencer.",
+    font=u'Arial',
     pos=(0, 0), height=0.1, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Initialize components for Routine "Resting_state"
@@ -456,15 +359,19 @@ fix_resting_state = visual.ImageStim(
 
 # Initialize components for Routine "Sham"
 ShamClock = core.Clock()
-rating = visual.RatingScale(win=win, name='rating', marker='triangle', size=1.0, pos=[0.0, -0.4], low=0, high=1, precision=100, showValue=False, scale=u'\xc0 quel point avez-vous per\xe7u une diff\xe9rence entre le dernier bloc et les blocs pr\xe9c\xe9dents ?')
+rating_sham = visual.RatingScale(win=win, name='rating_sham', marker=u'triangle', 
+                                size=1.0, pos=[0.0, -0.4], low=0, high=1, precision=50, 
+                                showValue=False, scale=u'\xc0 quel point avez-vous per\xe7u une diff\xe9rence entre le dernier bloc et les blocs pr\xe9c\xe9dents ?',
+                                disappear=True, respKeys = (), leftKeys = '5', rightKeys = '6', acceptKeys = ['4', '7'],
+                                        markerStart = '0.5')
 
 # Initialize components for Routine "Finito"
 FinitoClock = core.Clock()
 text_5 = visual.TextStim(win=win, name='text_5',
     text=u"Merci d'avoir particit\xe9 \xe0 cette exp\xe9rience sur la par\xe9idolie.\nVous pouvez faire signe \xe0 l'exp\xe9rimentateur.",
-    font='Arial',
+    font=u'Arial',
     pos=(0, 0), height=0.05, wrapWidth=None, ori=0, 
-    color='white', colorSpace='rgb', opacity=1,
+    color=u'white', colorSpace='rgb', opacity=1,
     depth=0.0);
 
 # Create some handy timers
@@ -508,7 +415,7 @@ while continueRoutine:
         win.callOnFlip(end_instructions.clock.reset)  # t=0 on next screen flip
         event.clearEvents(eventType='keyboard')
     if end_instructions.status == STARTED:
-        theseKeys = event.getKeys(keyList=['space'])
+        theseKeys = event.getKeys(keyList=['5'])
         
         # check for quit:
         if "escape" in theseKeys:
@@ -558,7 +465,7 @@ continueRoutine = True
 # update component parameters for each repeat
 key_resp_4 = event.BuilderKeyResponse()
 # keep track of which components have finished
-Instructions2Components = [instructions2, key_resp_4]
+Instructions2Components = [fatigueinstructions2, key_resp_4]
 for thisComponent in Instructions2Components:
     if hasattr(thisComponent, 'status'):
         thisComponent.status = NOT_STARTED
@@ -570,12 +477,12 @@ while continueRoutine:
     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
     # update/draw components on each frame
     
-    # *instructions2* updates
-    if t >= 0.0 and instructions2.status == NOT_STARTED:
+    # *fatigueinstructions2* updates
+    if t >= 0.0 and fatigueinstructions2.status == NOT_STARTED:
         # keep track of start time/frame for later
-        instructions2.tStart = t
-        instructions2.frameNStart = frameN  # exact frame index
-        instructions2.setAutoDraw(True)
+        fatigueinstructions2.tStart = t
+        fatigueinstructions2.frameNStart = frameN  # exact frame index
+        fatigueinstructions2.setAutoDraw(True)
     
     # *key_resp_4* updates
     if t >= 0.0 and key_resp_4.status == NOT_STARTED:
@@ -587,7 +494,7 @@ while continueRoutine:
         win.callOnFlip(key_resp_4.clock.reset)  # t=0 on next screen flip
         event.clearEvents(eventType='keyboard')
     if key_resp_4.status == STARTED:
-        theseKeys = event.getKeys(keyList=['space'])
+        theseKeys = event.getKeys(keyList=['5'])
         
         # check for quit:
         if "escape" in theseKeys:
@@ -629,140 +536,6 @@ thisExp.nextEntry()
 # the Routine "Instructions2" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
-# ------Prepare to start Routine "Instruction3"-------
-t = 0
-Instruction3Clock.reset()  # clock
-frameN = -1
-continueRoutine = True
-# update component parameters for each repeat
-key_resp_6 = event.BuilderKeyResponse()
-# keep track of which components have finished
-Instruction3Components = [text_4, key_resp_6]
-for thisComponent in Instruction3Components:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
-# -------Start Routine "Instruction3"-------
-while continueRoutine:
-    # get current time
-    t = Instruction3Clock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    
-    # *text_4* updates
-    if t >= 0.0 and text_4.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        text_4.tStart = t
-        text_4.frameNStart = frameN  # exact frame index
-        text_4.setAutoDraw(True)
-    
-    # *key_resp_6* updates
-    if t >= 0.0 and key_resp_6.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        key_resp_6.tStart = t
-        key_resp_6.frameNStart = frameN  # exact frame index
-        key_resp_6.status = STARTED
-        # keyboard checking is just starting
-        win.callOnFlip(key_resp_6.clock.reset)  # t=0 on next screen flip
-        event.clearEvents(eventType='keyboard')
-    if key_resp_6.status == STARTED:
-        theseKeys = event.getKeys(keyList=['space'])
-        
-        # check for quit:
-        if "escape" in theseKeys:
-            endExpNow = True
-        if len(theseKeys) > 0:  # at least one key was pressed
-            key_resp_6.keys = theseKeys[-1]  # just the last key pressed
-            key_resp_6.rt = key_resp_6.clock.getTime()
-            # a response ends the routine
-            continueRoutine = False
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in Instruction3Components:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# -------Ending Routine "Instruction3"-------
-for thisComponent in Instruction3Components:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# check responses
-if key_resp_6.keys in ['', [], None]:  # No response was made
-    key_resp_6.keys=None
-thisExp.addData('key_resp_6.keys',key_resp_6.keys)
-if key_resp_6.keys != None:  # we had a response
-    thisExp.addData('key_resp_6.rt', key_resp_6.rt)
-thisExp.nextEntry()
-# the Routine "Instruction3" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
-
-# ------Prepare to start Routine "Mental_fatigue"-------
-t = 0
-Mental_fatigueClock.reset()  # clock
-frameN = -1
-continueRoutine = True
-# update component parameters for each repeat
-Fatigue.reset()
-# keep track of which components have finished
-Mental_fatigueComponents = [Fatigue]
-for thisComponent in Mental_fatigueComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
-# -------Start Routine "Mental_fatigue"-------
-while continueRoutine:
-    # get current time
-    t = Mental_fatigueClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    # *Fatigue* updates
-    if t >= 0.0 and Fatigue.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Fatigue.tStart = t
-        Fatigue.frameNStart = frameN  # exact frame index
-        Fatigue.setAutoDraw(True)
-    continueRoutine &= Fatigue.noResponse  # a response ends the trial
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in Mental_fatigueComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# -------Ending Routine "Mental_fatigue"-------
-for thisComponent in Mental_fatigueComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Fatigue.response', Fatigue.getRating())
-thisExp.addData('Fatigue.rt', Fatigue.getRT())
-thisExp.nextEntry()
-# the Routine "Mental_fatigue" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
-
 # ------Prepare to start Routine "Resting_state_instructions"-------
 t = 0
 Resting_state_instructionsClock.reset()  # clock
@@ -800,7 +573,7 @@ while continueRoutine:
         win.callOnFlip(key_resp_9.clock.reset)  # t=0 on next screen flip
         event.clearEvents(eventType='keyboard')
     if key_resp_9.status == STARTED:
-        theseKeys = event.getKeys(keyList=['space'])
+        theseKeys = event.getKeys(keyList=['5'])
         
         # check for quit:
         if "escape" in theseKeys:
@@ -868,12 +641,11 @@ while continueRoutine:
         fix_resting_state.tStart = t
         fix_resting_state.frameNStart = frameN  # exact frame index
         fix_resting_state.setAutoDraw(True)
-        win.callOnFlip(send_data, port, int("00000001", 2))
-    frameRemains = 0.0 + 10- win.monitorFramePeriod * 0.75  # most of one frame period left
+        win.callOnFlip(send_data, port, MEG_SETTINGS['RS_start'])
+    frameRemains = 0.0 + 5- win.monitorFramePeriod * 0.75  # most of one frame period left
     if fix_resting_state.status == STARTED and t >= frameRemains:
         fix_resting_state.setAutoDraw(False)
-        win.callOnFlip(send_data, port, int("00000010", 2))
-    
+        win.callOnFlip(send_data, port, MEG_SETTINGS['RS_stop'])
     # *key_resp_10* updates
     if t >= 0.0 and key_resp_10.status == NOT_STARTED:
         # keep track of start time/frame for later
@@ -963,7 +735,7 @@ while continueRoutine:
         win.callOnFlip(key_resp_5.clock.reset)  # t=0 on next screen flip
         event.clearEvents(eventType='keyboard')
     if key_resp_5.status == STARTED:
-        theseKeys = event.getKeys(keyList=['space'])
+        theseKeys = event.getKeys(keyList=['5'])
         
         # check for quit:
         if "escape" in theseKeys:
@@ -1033,10 +805,9 @@ for thisTrial_4 in trials_4:
     image.setImage(ImageFile)
     n_objets.reset()
     reaction_time = event.BuilderKeyResponse()
-    vividness.reset()
     If_No_Resp = event.BuilderKeyResponse()
     # keep track of which components have finished
-    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, vividness, If_No_Resp]
+    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, If_No_Resp]
     for thisComponent in trial1Components:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -1064,6 +835,7 @@ for thisTrial_4 in trials_4:
             fixation_cross.tStart = t
             fixation_cross.frameNStart = frameN  # exact frame index
             fixation_cross.setAutoDraw(True)
+            win.callOnFlip(send_data, port, MEG_SETTINGS['cross'])
         frameRemains = 1 + 1.5- win.monitorFramePeriod * 0.75  # most of one frame period left
         if fixation_cross.status == STARTED and t >= frameRemains:
             fixation_cross.setAutoDraw(False)
@@ -1074,15 +846,18 @@ for thisTrial_4 in trials_4:
             image.tStart = t
             image.frameNStart = frameN  # exact frame index
             image.setAutoDraw(True)
+            win.callOnFlip(send_data, port, MEG_SETTINGS['im_start'])
         frameRemains = 2.5 + 8.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image.status == STARTED and t >= frameRemains:
             image.setAutoDraw(False)
+            win.callOnFlip(send_data, port, MEG_SETTINGS['im_stop'])
         # *n_objets* updates
         if (t >=10.5) and n_objets.status == NOT_STARTED:
             # keep track of start time/frame for later
             n_objets.tStart = t
             n_objets.frameNStart = frameN  # exact frame index
             n_objets.setAutoDraw(True)
+        continueRoutine &= n_objets.noResponse  # a response ends the trial
         
         # *reaction_time* updates
         if t >= 2.5 and reaction_time.status == NOT_STARTED:
@@ -1097,8 +872,10 @@ for thisTrial_4 in trials_4:
         if reaction_time.status == STARTED and t >= frameRemains:
             reaction_time.status = STOPPED
         if reaction_time.status == STARTED:
-            theseKeys = event.getKeys(keyList=['space'])
-            
+            theseKeys = event.getKeys(keyList=['5'])
+            if theseKeys == ['5']:
+                win.callOnFlip(send_data, port, MEG_SETTINGS['resp'])
+                
             # check for quit:
             if "escape" in theseKeys:
                 endExpNow = True
@@ -1106,13 +883,6 @@ for thisTrial_4 in trials_4:
                 if reaction_time.keys == []:  # then this was the first keypress
                     reaction_time.keys = theseKeys[0]  # just the first key pressed
                     reaction_time.rt = reaction_time.clock.getTime()
-        # *vividness* updates
-        if (n_objets.status == FINISHED) and vividness.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            vividness.tStart = t
-            vividness.frameNStart = frameN  # exact frame index
-            vividness.setAutoDraw(True)
-        continueRoutine &= vividness.noResponse  # a response ends the trial
         
         # *If_No_Resp* updates
         if t >= 10.5 and If_No_Resp.status == NOT_STARTED:
@@ -1161,9 +931,6 @@ for thisTrial_4 in trials_4:
     trials_4.addData('reaction_time.keys',reaction_time.keys)
     if reaction_time.keys != None:  # we had a response
         trials_4.addData('reaction_time.rt', reaction_time.rt)
-    # store data for trials_4 (TrialHandler)
-    trials_4.addData('vividness.response', vividness.getRating())
-    trials_4.addData('vividness.rt', vividness.getRT())
     # the Routine "trial1" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     thisExp.nextEntry()
@@ -1208,7 +975,7 @@ while continueRoutine:
         win.callOnFlip(key_resp_2.clock.reset)  # t=0 on next screen flip
         event.clearEvents(eventType='keyboard')
     if key_resp_2.status == STARTED:
-        theseKeys = event.getKeys(keyList=['space'])
+        theseKeys = event.getKeys(keyList=['6'])
         
         # check for quit:
         if "escape" in theseKeys:
@@ -1278,10 +1045,9 @@ for thisTrial in trials:
     image.setImage(ImageFile)
     n_objets.reset()
     reaction_time = event.BuilderKeyResponse()
-    vividness.reset()
     If_No_Resp = event.BuilderKeyResponse()
     # keep track of which components have finished
-    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, vividness, If_No_Resp]
+    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, If_No_Resp]
     for thisComponent in trial1Components:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -1299,7 +1065,6 @@ for thisTrial in trials:
             empty_gray.tStart = t
             empty_gray.frameNStart = frameN  # exact frame index
             empty_gray.setAutoDraw(True)
-            win.callOnFlip(send_data, port, '3')
         frameRemains = 0.0 + 1.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if empty_gray.status == STARTED and t >= frameRemains:
             empty_gray.setAutoDraw(False)
@@ -1310,7 +1075,7 @@ for thisTrial in trials:
             fixation_cross.tStart = t
             fixation_cross.frameNStart = frameN  # exact frame index
             fixation_cross.setAutoDraw(True)
-            win.callOnFlip(send_data, port, 4)
+            win.callOnFlip(send_data, port, MEG_SETTINGS['cross'])
         frameRemains = 1 + 1.5- win.monitorFramePeriod * 0.75  # most of one frame period left
         if fixation_cross.status == STARTED and t >= frameRemains:
             fixation_cross.setAutoDraw(False)
@@ -1321,17 +1086,18 @@ for thisTrial in trials:
             image.tStart = t
             image.frameNStart = frameN  # exact frame index
             image.setAutoDraw(True)
-            win.callOnFlip(send_data, port, 5)
+            win.callOnFlip(send_data, port, MEG_SETTINGS['im_start'])
         frameRemains = 2.5 + 8.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image.status == STARTED and t >= frameRemains:
             image.setAutoDraw(False)
-            win.callOnFlip(send_data, port, 6)
+            win.callOnFlip(send_data, port, MEG_SETTINGS['im_stop'])
         # *n_objets* updates
         if (t >=10.5) and n_objets.status == NOT_STARTED:
             # keep track of start time/frame for later
             n_objets.tStart = t
             n_objets.frameNStart = frameN  # exact frame index
             n_objets.setAutoDraw(True)
+        continueRoutine &= n_objets.noResponse  # a response ends the trial
         
         # *reaction_time* updates
         if t >= 2.5 and reaction_time.status == NOT_STARTED:
@@ -1346,11 +1112,10 @@ for thisTrial in trials:
         if reaction_time.status == STARTED and t >= frameRemains:
             reaction_time.status = STOPPED
         if reaction_time.status == STARTED:
-            theseKeys = event.getKeys(keyList=['space'])
-            if theseKeys == ['space']:  
-                win.callOnFlip(ns.sync)
-                win.callOnFlip(ns.send_event, 7)
-                
+            theseKeys = event.getKeys(keyList=['6'])
+            if theseKeys == ['6']:
+                win.callOnFlip(send_data, port, MEG_SETTINGS['resp'])
+            
             # check for quit:
             if "escape" in theseKeys:
                 endExpNow = True
@@ -1358,13 +1123,6 @@ for thisTrial in trials:
                 if reaction_time.keys == []:  # then this was the first keypress
                     reaction_time.keys = theseKeys[0]  # just the first key pressed
                     reaction_time.rt = reaction_time.clock.getTime()
-        # *vividness* updates
-        if (n_objets.status == FINISHED) and vividness.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            vividness.tStart = t
-            vividness.frameNStart = frameN  # exact frame index
-            vividness.setAutoDraw(True)
-        continueRoutine &= vividness.noResponse  # a response ends the trial
         
         # *If_No_Resp* updates
         if t >= 10.5 and If_No_Resp.status == NOT_STARTED:
@@ -1413,9 +1171,6 @@ for thisTrial in trials:
     trials.addData('reaction_time.keys',reaction_time.keys)
     if reaction_time.keys != None:  # we had a response
         trials.addData('reaction_time.rt', reaction_time.rt)
-    # store data for trials (TrialHandler)
-    trials.addData('vividness.response', vividness.getRating())
-    trials.addData('vividness.rt', vividness.getRT())
     # the Routine "trial1" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     thisExp.nextEntry()
@@ -1460,7 +1215,7 @@ while continueRoutine:
         win.callOnFlip(key_resp_8.clock.reset)  # t=0 on next screen flip
         event.clearEvents(eventType='keyboard')
     if key_resp_8.status == STARTED:
-        theseKeys = event.getKeys(keyList=['space'])
+        theseKeys = event.getKeys(keyList=['5', '6'])
         
         # check for quit:
         if "escape" in theseKeys:
@@ -1502,274 +1257,6 @@ thisExp.nextEntry()
 # the Routine "Fin_bloc" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
-# ------Prepare to start Routine "Mental_fatigue"-------
-t = 0
-Mental_fatigueClock.reset()  # clock
-frameN = -1
-continueRoutine = True
-# update component parameters for each repeat
-Fatigue.reset()
-# keep track of which components have finished
-Mental_fatigueComponents = [Fatigue]
-for thisComponent in Mental_fatigueComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
-# -------Start Routine "Mental_fatigue"-------
-while continueRoutine:
-    # get current time
-    t = Mental_fatigueClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    # *Fatigue* updates
-    if t >= 0.0 and Fatigue.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Fatigue.tStart = t
-        Fatigue.frameNStart = frameN  # exact frame index
-        Fatigue.setAutoDraw(True)
-    continueRoutine &= Fatigue.noResponse  # a response ends the trial
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in Mental_fatigueComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# -------Ending Routine "Mental_fatigue"-------
-for thisComponent in Mental_fatigueComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Fatigue.response', Fatigue.getRating())
-thisExp.addData('Fatigue.rt', Fatigue.getRT())
-thisExp.nextEntry()
-# the Routine "Mental_fatigue" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
-
-# ------Prepare to start Routine "Flow"-------
-t = 0
-FlowClock.reset()  # clock
-frameN = -1
-continueRoutine = True
-# update component parameters for each repeat
-key_resp_7 = event.BuilderKeyResponse()
-# keep track of which components have finished
-FlowComponents = [text_6, key_resp_7]
-for thisComponent in FlowComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
-# -------Start Routine "Flow"-------
-while continueRoutine:
-    # get current time
-    t = FlowClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    
-    # *text_6* updates
-    if t >= 0.0 and text_6.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        text_6.tStart = t
-        text_6.frameNStart = frameN  # exact frame index
-        text_6.setAutoDraw(True)
-    
-    # *key_resp_7* updates
-    if t >= 0.0 and key_resp_7.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        key_resp_7.tStart = t
-        key_resp_7.frameNStart = frameN  # exact frame index
-        key_resp_7.status = STARTED
-        # keyboard checking is just starting
-        event.clearEvents(eventType='keyboard')
-    if key_resp_7.status == STARTED:
-        theseKeys = event.getKeys(keyList=['space'])
-        
-        # check for quit:
-        if "escape" in theseKeys:
-            endExpNow = True
-        if len(theseKeys) > 0:  # at least one key was pressed
-            # a response ends the routine
-            continueRoutine = False
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in FlowComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# -------Ending Routine "Flow"-------
-for thisComponent in FlowComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# the Routine "Flow" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
-
-# ------Prepare to start Routine "Flow_questions"-------
-t = 0
-Flow_questionsClock.reset()  # clock
-frameN = -1
-continueRoutine = True
-# update component parameters for each repeat
-Flow01.reset()
-Flow02.reset()
-Flow03.reset()
-Flow04.reset()
-Flow05.reset()
-Flow06.reset()
-Flow07.reset()
-Flow08.reset()
-Flow09.reset()
-Flow10.reset()
-# keep track of which components have finished
-Flow_questionsComponents = [Flow01, Flow02, Flow03, Flow04, Flow05, Flow06, Flow07, Flow08, Flow09, Flow10]
-for thisComponent in Flow_questionsComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
-# -------Start Routine "Flow_questions"-------
-while continueRoutine:
-    # get current time
-    t = Flow_questionsClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    # *Flow01* updates
-    if t >= 0.0 and Flow01.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow01.tStart = t
-        Flow01.frameNStart = frameN  # exact frame index
-        Flow01.setAutoDraw(True)
-    # *Flow02* updates
-    if t >= Flow01.status == FINISHED and Flow02.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow02.tStart = t
-        Flow02.frameNStart = frameN  # exact frame index
-        Flow02.setAutoDraw(True)
-    # *Flow03* updates
-    if t >= Flow02.status == FINISHED and Flow03.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow03.tStart = t
-        Flow03.frameNStart = frameN  # exact frame index
-        Flow03.setAutoDraw(True)
-    # *Flow04* updates
-    if t >= Flow03.status == FINISHED and Flow04.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow04.tStart = t
-        Flow04.frameNStart = frameN  # exact frame index
-        Flow04.setAutoDraw(True)
-    # *Flow05* updates
-    if t >= Flow04.status == FINISHED and Flow05.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow05.tStart = t
-        Flow05.frameNStart = frameN  # exact frame index
-        Flow05.setAutoDraw(True)
-    # *Flow06* updates
-    if t >= Flow05.status == FINISHED and Flow06.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow06.tStart = t
-        Flow06.frameNStart = frameN  # exact frame index
-        Flow06.setAutoDraw(True)
-    # *Flow07* updates
-    if t >= Flow06.status == FINISHED and Flow07.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow07.tStart = t
-        Flow07.frameNStart = frameN  # exact frame index
-        Flow07.setAutoDraw(True)
-    # *Flow08* updates
-    if t >= Flow07.status == FINISHED and Flow08.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow08.tStart = t
-        Flow08.frameNStart = frameN  # exact frame index
-        Flow08.setAutoDraw(True)
-    # *Flow09* updates
-    if t >= Flow08.status == FINISHED and Flow09.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow09.tStart = t
-        Flow09.frameNStart = frameN  # exact frame index
-        Flow09.setAutoDraw(True)
-    # *Flow10* updates
-    if t >= Flow09.status == FINISHED and Flow10.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow10.tStart = t
-        Flow10.frameNStart = frameN  # exact frame index
-        Flow10.setAutoDraw(True)
-    continueRoutine &= Flow10.noResponse  # a response ends the trial
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in Flow_questionsComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# -------Ending Routine "Flow_questions"-------
-for thisComponent in Flow_questionsComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow01.response', Flow01.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow02.response', Flow02.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow03.response', Flow03.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow04.response', Flow04.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow05.response', Flow05.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow06.response', Flow06.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow07.response', Flow07.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow08.response', Flow08.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow09.response', Flow09.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow10.response', Flow10.getRating())
-thisExp.nextEntry()
-# the Routine "Flow_questions" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
-
 # ------Prepare to start Routine "StartXX"-------
 t = 0
 StartXXClock.reset()  # clock
@@ -1807,7 +1294,7 @@ while continueRoutine:
         win.callOnFlip(key_resp_3.clock.reset)  # t=0 on next screen flip
         event.clearEvents(eventType='keyboard')
     if key_resp_3.status == STARTED:
-        theseKeys = event.getKeys(keyList=['space'])
+        theseKeys = event.getKeys(keyList=['5'])
         
         # check for quit:
         if "escape" in theseKeys:
@@ -1877,10 +1364,9 @@ for thisTrial_2 in trials_2:
     image.setImage(ImageFile)
     n_objets.reset()
     reaction_time = event.BuilderKeyResponse()
-    vividness.reset()
     If_No_Resp = event.BuilderKeyResponse()
     # keep track of which components have finished
-    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, vividness, If_No_Resp]
+    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, If_No_Resp]
     for thisComponent in trial1Components:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -1898,8 +1384,6 @@ for thisTrial_2 in trials_2:
             empty_gray.tStart = t
             empty_gray.frameNStart = frameN  # exact frame index
             empty_gray.setAutoDraw(True)
-            win.callOnFlip(ns.sync)
-            win.callOnFlip(ns.send_event, '0')
         frameRemains = 0.0 + 1.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if empty_gray.status == STARTED and t >= frameRemains:
             empty_gray.setAutoDraw(False)
@@ -1910,8 +1394,6 @@ for thisTrial_2 in trials_2:
             fixation_cross.tStart = t
             fixation_cross.frameNStart = frameN  # exact frame index
             fixation_cross.setAutoDraw(True)
-            win.callOnFlip(ns.sync)
-            win.callOnFlip(ns.send_event, '1')
         frameRemains = 1 + 1.5- win.monitorFramePeriod * 0.75  # most of one frame period left
         if fixation_cross.status == STARTED and t >= frameRemains:
             fixation_cross.setAutoDraw(False)
@@ -1922,19 +1404,16 @@ for thisTrial_2 in trials_2:
             image.tStart = t
             image.frameNStart = frameN  # exact frame index
             image.setAutoDraw(True)
-            win.callOnFlip(ns.sync)
-            win.callOnFlip(ns.send_event, '2')
         frameRemains = 2.5 + 8.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image.status == STARTED and t >= frameRemains:
             image.setAutoDraw(False)
-            win.callOnFlip(ns.sync)
-            win.callOnFlip(ns.send_event, '3')
         # *n_objets* updates
         if (t >=10.5) and n_objets.status == NOT_STARTED:
             # keep track of start time/frame for later
             n_objets.tStart = t
             n_objets.frameNStart = frameN  # exact frame index
             n_objets.setAutoDraw(True)
+        continueRoutine &= n_objets.noResponse  # a response ends the trial
         
         # *reaction_time* updates
         if t >= 2.5 and reaction_time.status == NOT_STARTED:
@@ -1950,9 +1429,7 @@ for thisTrial_2 in trials_2:
             reaction_time.status = STOPPED
         if reaction_time.status == STARTED:
             theseKeys = event.getKeys(keyList=['space'])
-            if theseKeys == ['space']:  
-                win.callOnFlip(ns.sync)
-                win.callOnFlip(ns.send_event, '4')
+            
             # check for quit:
             if "escape" in theseKeys:
                 endExpNow = True
@@ -1960,13 +1437,6 @@ for thisTrial_2 in trials_2:
                 if reaction_time.keys == []:  # then this was the first keypress
                     reaction_time.keys = theseKeys[0]  # just the first key pressed
                     reaction_time.rt = reaction_time.clock.getTime()
-        # *vividness* updates
-        if (n_objets.status == FINISHED) and vividness.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            vividness.tStart = t
-            vividness.frameNStart = frameN  # exact frame index
-            vividness.setAutoDraw(True)
-        continueRoutine &= vividness.noResponse  # a response ends the trial
         
         # *If_No_Resp* updates
         if t >= 10.5 and If_No_Resp.status == NOT_STARTED:
@@ -2015,9 +1485,6 @@ for thisTrial_2 in trials_2:
     trials_2.addData('reaction_time.keys',reaction_time.keys)
     if reaction_time.keys != None:  # we had a response
         trials_2.addData('reaction_time.rt', reaction_time.rt)
-    # store data for trials_2 (TrialHandler)
-    trials_2.addData('vividness.response', vividness.getRating())
-    trials_2.addData('vividness.rt', vividness.getRT())
     # the Routine "trial1" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     thisExp.nextEntry()
@@ -2062,7 +1529,7 @@ while continueRoutine:
         win.callOnFlip(key_resp_8.clock.reset)  # t=0 on next screen flip
         event.clearEvents(eventType='keyboard')
     if key_resp_8.status == STARTED:
-        theseKeys = event.getKeys(keyList=['space'])
+        theseKeys = event.getKeys(keyList=['5', '6'])
         
         # check for quit:
         if "escape" in theseKeys:
@@ -2104,103 +1571,51 @@ thisExp.nextEntry()
 # the Routine "Fin_bloc" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
-# ------Prepare to start Routine "Mental_fatigue"-------
+# ------Prepare to start Routine "start_xxx"-------
 t = 0
-Mental_fatigueClock.reset()  # clock
+start_xxxClock.reset()  # clock
 frameN = -1
 continueRoutine = True
 # update component parameters for each repeat
-Fatigue.reset()
+key_resp_12 = event.BuilderKeyResponse()
 # keep track of which components have finished
-Mental_fatigueComponents = [Fatigue]
-for thisComponent in Mental_fatigueComponents:
+start_xxxComponents = [text_8, key_resp_12]
+for thisComponent in start_xxxComponents:
     if hasattr(thisComponent, 'status'):
         thisComponent.status = NOT_STARTED
 
-# -------Start Routine "Mental_fatigue"-------
+# -------Start Routine "start_xxx"-------
 while continueRoutine:
     # get current time
-    t = Mental_fatigueClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    # *Fatigue* updates
-    if t >= 0.0 and Fatigue.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Fatigue.tStart = t
-        Fatigue.frameNStart = frameN  # exact frame index
-        Fatigue.setAutoDraw(True)
-    continueRoutine &= Fatigue.noResponse  # a response ends the trial
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in Mental_fatigueComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# -------Ending Routine "Mental_fatigue"-------
-for thisComponent in Mental_fatigueComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Fatigue.response', Fatigue.getRating())
-thisExp.addData('Fatigue.rt', Fatigue.getRT())
-thisExp.nextEntry()
-# the Routine "Mental_fatigue" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
-
-# ------Prepare to start Routine "Flow"-------
-t = 0
-FlowClock.reset()  # clock
-frameN = -1
-continueRoutine = True
-# update component parameters for each repeat
-key_resp_7 = event.BuilderKeyResponse()
-# keep track of which components have finished
-FlowComponents = [text_6, key_resp_7]
-for thisComponent in FlowComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
-# -------Start Routine "Flow"-------
-while continueRoutine:
-    # get current time
-    t = FlowClock.getTime()
+    t = start_xxxClock.getTime()
     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
     # update/draw components on each frame
     
-    # *text_6* updates
-    if t >= 0.0 and text_6.status == NOT_STARTED:
+    # *text_8* updates
+    if t >= 0.0 and text_8.status == NOT_STARTED:
         # keep track of start time/frame for later
-        text_6.tStart = t
-        text_6.frameNStart = frameN  # exact frame index
-        text_6.setAutoDraw(True)
+        text_8.tStart = t
+        text_8.frameNStart = frameN  # exact frame index
+        text_8.setAutoDraw(True)
     
-    # *key_resp_7* updates
-    if t >= 0.0 and key_resp_7.status == NOT_STARTED:
+    # *key_resp_12* updates
+    if t >= 0.0 and key_resp_12.status == NOT_STARTED:
         # keep track of start time/frame for later
-        key_resp_7.tStart = t
-        key_resp_7.frameNStart = frameN  # exact frame index
-        key_resp_7.status = STARTED
+        key_resp_12.tStart = t
+        key_resp_12.frameNStart = frameN  # exact frame index
+        key_resp_12.status = STARTED
         # keyboard checking is just starting
+        win.callOnFlip(key_resp_12.clock.reset)  # t=0 on next screen flip
         event.clearEvents(eventType='keyboard')
-    if key_resp_7.status == STARTED:
-        theseKeys = event.getKeys(keyList=['space'])
+    if key_resp_12.status == STARTED:
+        theseKeys = event.getKeys(keyList=['6'])
         
         # check for quit:
         if "escape" in theseKeys:
             endExpNow = True
         if len(theseKeys) > 0:  # at least one key was pressed
+            key_resp_12.keys = theseKeys[-1]  # just the last key pressed
+            key_resp_12.rt = key_resp_12.clock.getTime()
             # a response ends the routine
             continueRoutine = False
     
@@ -2208,7 +1623,7 @@ while continueRoutine:
     if not continueRoutine:  # a component has requested a forced-end of Routine
         break
     continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in FlowComponents:
+    for thisComponent in start_xxxComponents:
         if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
             continueRoutine = True
             break  # at least one component has not yet finished
@@ -2221,234 +1636,18 @@ while continueRoutine:
     if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
         win.flip()
 
-# -------Ending Routine "Flow"-------
-for thisComponent in FlowComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# the Routine "Flow" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
-
-# ------Prepare to start Routine "Flow_questions"-------
-t = 0
-Flow_questionsClock.reset()  # clock
-frameN = -1
-continueRoutine = True
-# update component parameters for each repeat
-Flow01.reset()
-Flow02.reset()
-Flow03.reset()
-Flow04.reset()
-Flow05.reset()
-Flow06.reset()
-Flow07.reset()
-Flow08.reset()
-Flow09.reset()
-Flow10.reset()
-# keep track of which components have finished
-Flow_questionsComponents = [Flow01, Flow02, Flow03, Flow04, Flow05, Flow06, Flow07, Flow08, Flow09, Flow10]
-for thisComponent in Flow_questionsComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
-# -------Start Routine "Flow_questions"-------
-while continueRoutine:
-    # get current time
-    t = Flow_questionsClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    # *Flow01* updates
-    if t >= 0.0 and Flow01.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow01.tStart = t
-        Flow01.frameNStart = frameN  # exact frame index
-        Flow01.setAutoDraw(True)
-    # *Flow02* updates
-    if t >= Flow01.status == FINISHED and Flow02.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow02.tStart = t
-        Flow02.frameNStart = frameN  # exact frame index
-        Flow02.setAutoDraw(True)
-    # *Flow03* updates
-    if t >= Flow02.status == FINISHED and Flow03.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow03.tStart = t
-        Flow03.frameNStart = frameN  # exact frame index
-        Flow03.setAutoDraw(True)
-    # *Flow04* updates
-    if t >= Flow03.status == FINISHED and Flow04.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow04.tStart = t
-        Flow04.frameNStart = frameN  # exact frame index
-        Flow04.setAutoDraw(True)
-    # *Flow05* updates
-    if t >= Flow04.status == FINISHED and Flow05.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow05.tStart = t
-        Flow05.frameNStart = frameN  # exact frame index
-        Flow05.setAutoDraw(True)
-    # *Flow06* updates
-    if t >= Flow05.status == FINISHED and Flow06.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow06.tStart = t
-        Flow06.frameNStart = frameN  # exact frame index
-        Flow06.setAutoDraw(True)
-    # *Flow07* updates
-    if t >= Flow06.status == FINISHED and Flow07.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow07.tStart = t
-        Flow07.frameNStart = frameN  # exact frame index
-        Flow07.setAutoDraw(True)
-    # *Flow08* updates
-    if t >= Flow07.status == FINISHED and Flow08.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow08.tStart = t
-        Flow08.frameNStart = frameN  # exact frame index
-        Flow08.setAutoDraw(True)
-    # *Flow09* updates
-    if t >= Flow08.status == FINISHED and Flow09.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow09.tStart = t
-        Flow09.frameNStart = frameN  # exact frame index
-        Flow09.setAutoDraw(True)
-    # *Flow10* updates
-    if t >= Flow09.status == FINISHED and Flow10.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow10.tStart = t
-        Flow10.frameNStart = frameN  # exact frame index
-        Flow10.setAutoDraw(True)
-    continueRoutine &= Flow10.noResponse  # a response ends the trial
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in Flow_questionsComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# -------Ending Routine "Flow_questions"-------
-for thisComponent in Flow_questionsComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow01.response', Flow01.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow02.response', Flow02.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow03.response', Flow03.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow04.response', Flow04.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow05.response', Flow05.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow06.response', Flow06.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow07.response', Flow07.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow08.response', Flow08.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow09.response', Flow09.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow10.response', Flow10.getRating())
-thisExp.nextEntry()
-# the Routine "Flow_questions" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
-
-# ------Prepare to start Routine "StartXX"-------
-t = 0
-StartXXClock.reset()  # clock
-frameN = -1
-continueRoutine = True
-# update component parameters for each repeat
-key_resp_3 = event.BuilderKeyResponse()
-# keep track of which components have finished
-StartXXComponents = [text_2, key_resp_3]
-for thisComponent in StartXXComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
-# -------Start Routine "StartXX"-------
-while continueRoutine:
-    # get current time
-    t = StartXXClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    
-    # *text_2* updates
-    if t >= 0.0 and text_2.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        text_2.tStart = t
-        text_2.frameNStart = frameN  # exact frame index
-        text_2.setAutoDraw(True)
-    
-    # *key_resp_3* updates
-    if t >= 0.0 and key_resp_3.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        key_resp_3.tStart = t
-        key_resp_3.frameNStart = frameN  # exact frame index
-        key_resp_3.status = STARTED
-        # keyboard checking is just starting
-        win.callOnFlip(key_resp_3.clock.reset)  # t=0 on next screen flip
-        event.clearEvents(eventType='keyboard')
-    if key_resp_3.status == STARTED:
-        theseKeys = event.getKeys(keyList=['space'])
-        
-        # check for quit:
-        if "escape" in theseKeys:
-            endExpNow = True
-        if len(theseKeys) > 0:  # at least one key was pressed
-            key_resp_3.keys = theseKeys[-1]  # just the last key pressed
-            key_resp_3.rt = key_resp_3.clock.getTime()
-            # a response ends the routine
-            continueRoutine = False
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in StartXXComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# -------Ending Routine "StartXX"-------
-for thisComponent in StartXXComponents:
+# -------Ending Routine "start_xxx"-------
+for thisComponent in start_xxxComponents:
     if hasattr(thisComponent, "setAutoDraw"):
         thisComponent.setAutoDraw(False)
 # check responses
-if key_resp_3.keys in ['', [], None]:  # No response was made
-    key_resp_3.keys=None
-thisExp.addData('key_resp_3.keys',key_resp_3.keys)
-if key_resp_3.keys != None:  # we had a response
-    thisExp.addData('key_resp_3.rt', key_resp_3.rt)
+if key_resp_12.keys in ['', [], None]:  # No response was made
+    key_resp_12.keys=None
+thisExp.addData('key_resp_12.keys',key_resp_12.keys)
+if key_resp_12.keys != None:  # we had a response
+    thisExp.addData('key_resp_12.rt', key_resp_12.rt)
 thisExp.nextEntry()
-# the Routine "StartXX" was not non-slip safe, so reset the non-slip timer
+# the Routine "start_xxx" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
 # set up handler to look after randomisation of conditions etc
@@ -2479,10 +1678,9 @@ for thisTrial_3 in trials_3:
     image.setImage(ImageFile)
     n_objets.reset()
     reaction_time = event.BuilderKeyResponse()
-    vividness.reset()
     If_No_Resp = event.BuilderKeyResponse()
     # keep track of which components have finished
-    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, vividness, If_No_Resp]
+    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, If_No_Resp]
     for thisComponent in trial1Components:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -2500,8 +1698,6 @@ for thisTrial_3 in trials_3:
             empty_gray.tStart = t
             empty_gray.frameNStart = frameN  # exact frame index
             empty_gray.setAutoDraw(True)
-            win.callOnFlip(ns.sync)
-            win.callOnFlip(ns.send_event, '0')
         frameRemains = 0.0 + 1.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if empty_gray.status == STARTED and t >= frameRemains:
             empty_gray.setAutoDraw(False)
@@ -2512,8 +1708,6 @@ for thisTrial_3 in trials_3:
             fixation_cross.tStart = t
             fixation_cross.frameNStart = frameN  # exact frame index
             fixation_cross.setAutoDraw(True)
-            win.callOnFlip(ns.sync)
-            win.callOnFlip(ns.send_event, '1')
         frameRemains = 1 + 1.5- win.monitorFramePeriod * 0.75  # most of one frame period left
         if fixation_cross.status == STARTED and t >= frameRemains:
             fixation_cross.setAutoDraw(False)
@@ -2524,19 +1718,16 @@ for thisTrial_3 in trials_3:
             image.tStart = t
             image.frameNStart = frameN  # exact frame index
             image.setAutoDraw(True)
-            win.callOnFlip(ns.sync)
-            win.callOnFlip(ns.send_event, '2')
         frameRemains = 2.5 + 8.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image.status == STARTED and t >= frameRemains:
             image.setAutoDraw(False)
-            win.callOnFlip(ns.sync)
-            win.callOnFlip(ns.send_event, '3')
         # *n_objets* updates
         if (t >=10.5) and n_objets.status == NOT_STARTED:
             # keep track of start time/frame for later
             n_objets.tStart = t
             n_objets.frameNStart = frameN  # exact frame index
             n_objets.setAutoDraw(True)
+        continueRoutine &= n_objets.noResponse  # a response ends the trial
         
         # *reaction_time* updates
         if t >= 2.5 and reaction_time.status == NOT_STARTED:
@@ -2552,9 +1743,7 @@ for thisTrial_3 in trials_3:
             reaction_time.status = STOPPED
         if reaction_time.status == STARTED:
             theseKeys = event.getKeys(keyList=['space'])
-            if theseKeys == ['space']:  
-                win.callOnFlip(ns.sync)
-                win.callOnFlip(ns.send_event, '4')
+            
             # check for quit:
             if "escape" in theseKeys:
                 endExpNow = True
@@ -2562,13 +1751,6 @@ for thisTrial_3 in trials_3:
                 if reaction_time.keys == []:  # then this was the first keypress
                     reaction_time.keys = theseKeys[0]  # just the first key pressed
                     reaction_time.rt = reaction_time.clock.getTime()
-        # *vividness* updates
-        if (n_objets.status == FINISHED) and vividness.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            vividness.tStart = t
-            vividness.frameNStart = frameN  # exact frame index
-            vividness.setAutoDraw(True)
-        continueRoutine &= vividness.noResponse  # a response ends the trial
         
         # *If_No_Resp* updates
         if t >= 10.5 and If_No_Resp.status == NOT_STARTED:
@@ -2617,9 +1799,6 @@ for thisTrial_3 in trials_3:
     trials_3.addData('reaction_time.keys',reaction_time.keys)
     if reaction_time.keys != None:  # we had a response
         trials_3.addData('reaction_time.rt', reaction_time.rt)
-    # store data for trials_3 (TrialHandler)
-    trials_3.addData('vividness.response', vividness.getRating())
-    trials_3.addData('vividness.rt', vividness.getRT())
     # the Routine "trial1" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     thisExp.nextEntry()
@@ -2664,7 +1843,7 @@ while continueRoutine:
         win.callOnFlip(key_resp_8.clock.reset)  # t=0 on next screen flip
         event.clearEvents(eventType='keyboard')
     if key_resp_8.status == STARTED:
-        theseKeys = event.getKeys(keyList=['space'])
+        theseKeys = event.getKeys(keyList=['5', '6'])
         
         # check for quit:
         if "escape" in theseKeys:
@@ -2704,274 +1883,6 @@ if key_resp_8.keys != None:  # we had a response
     thisExp.addData('key_resp_8.rt', key_resp_8.rt)
 thisExp.nextEntry()
 # the Routine "Fin_bloc" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
-
-# ------Prepare to start Routine "Mental_fatigue"-------
-t = 0
-Mental_fatigueClock.reset()  # clock
-frameN = -1
-continueRoutine = True
-# update component parameters for each repeat
-Fatigue.reset()
-# keep track of which components have finished
-Mental_fatigueComponents = [Fatigue]
-for thisComponent in Mental_fatigueComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
-# -------Start Routine "Mental_fatigue"-------
-while continueRoutine:
-    # get current time
-    t = Mental_fatigueClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    # *Fatigue* updates
-    if t >= 0.0 and Fatigue.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Fatigue.tStart = t
-        Fatigue.frameNStart = frameN  # exact frame index
-        Fatigue.setAutoDraw(True)
-    continueRoutine &= Fatigue.noResponse  # a response ends the trial
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in Mental_fatigueComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# -------Ending Routine "Mental_fatigue"-------
-for thisComponent in Mental_fatigueComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Fatigue.response', Fatigue.getRating())
-thisExp.addData('Fatigue.rt', Fatigue.getRT())
-thisExp.nextEntry()
-# the Routine "Mental_fatigue" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
-
-# ------Prepare to start Routine "Flow"-------
-t = 0
-FlowClock.reset()  # clock
-frameN = -1
-continueRoutine = True
-# update component parameters for each repeat
-key_resp_7 = event.BuilderKeyResponse()
-# keep track of which components have finished
-FlowComponents = [text_6, key_resp_7]
-for thisComponent in FlowComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
-# -------Start Routine "Flow"-------
-while continueRoutine:
-    # get current time
-    t = FlowClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    
-    # *text_6* updates
-    if t >= 0.0 and text_6.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        text_6.tStart = t
-        text_6.frameNStart = frameN  # exact frame index
-        text_6.setAutoDraw(True)
-    
-    # *key_resp_7* updates
-    if t >= 0.0 and key_resp_7.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        key_resp_7.tStart = t
-        key_resp_7.frameNStart = frameN  # exact frame index
-        key_resp_7.status = STARTED
-        # keyboard checking is just starting
-        event.clearEvents(eventType='keyboard')
-    if key_resp_7.status == STARTED:
-        theseKeys = event.getKeys(keyList=['space'])
-        
-        # check for quit:
-        if "escape" in theseKeys:
-            endExpNow = True
-        if len(theseKeys) > 0:  # at least one key was pressed
-            # a response ends the routine
-            continueRoutine = False
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in FlowComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# -------Ending Routine "Flow"-------
-for thisComponent in FlowComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# the Routine "Flow" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
-
-# ------Prepare to start Routine "Flow_questions"-------
-t = 0
-Flow_questionsClock.reset()  # clock
-frameN = -1
-continueRoutine = True
-# update component parameters for each repeat
-Flow01.reset()
-Flow02.reset()
-Flow03.reset()
-Flow04.reset()
-Flow05.reset()
-Flow06.reset()
-Flow07.reset()
-Flow08.reset()
-Flow09.reset()
-Flow10.reset()
-# keep track of which components have finished
-Flow_questionsComponents = [Flow01, Flow02, Flow03, Flow04, Flow05, Flow06, Flow07, Flow08, Flow09, Flow10]
-for thisComponent in Flow_questionsComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
-# -------Start Routine "Flow_questions"-------
-while continueRoutine:
-    # get current time
-    t = Flow_questionsClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    # *Flow01* updates
-    if t >= 0.0 and Flow01.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow01.tStart = t
-        Flow01.frameNStart = frameN  # exact frame index
-        Flow01.setAutoDraw(True)
-    # *Flow02* updates
-    if t >= Flow01.status == FINISHED and Flow02.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow02.tStart = t
-        Flow02.frameNStart = frameN  # exact frame index
-        Flow02.setAutoDraw(True)
-    # *Flow03* updates
-    if t >= Flow02.status == FINISHED and Flow03.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow03.tStart = t
-        Flow03.frameNStart = frameN  # exact frame index
-        Flow03.setAutoDraw(True)
-    # *Flow04* updates
-    if t >= Flow03.status == FINISHED and Flow04.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow04.tStart = t
-        Flow04.frameNStart = frameN  # exact frame index
-        Flow04.setAutoDraw(True)
-    # *Flow05* updates
-    if t >= Flow04.status == FINISHED and Flow05.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow05.tStart = t
-        Flow05.frameNStart = frameN  # exact frame index
-        Flow05.setAutoDraw(True)
-    # *Flow06* updates
-    if t >= Flow05.status == FINISHED and Flow06.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow06.tStart = t
-        Flow06.frameNStart = frameN  # exact frame index
-        Flow06.setAutoDraw(True)
-    # *Flow07* updates
-    if t >= Flow06.status == FINISHED and Flow07.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow07.tStart = t
-        Flow07.frameNStart = frameN  # exact frame index
-        Flow07.setAutoDraw(True)
-    # *Flow08* updates
-    if t >= Flow07.status == FINISHED and Flow08.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow08.tStart = t
-        Flow08.frameNStart = frameN  # exact frame index
-        Flow08.setAutoDraw(True)
-    # *Flow09* updates
-    if t >= Flow08.status == FINISHED and Flow09.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow09.tStart = t
-        Flow09.frameNStart = frameN  # exact frame index
-        Flow09.setAutoDraw(True)
-    # *Flow10* updates
-    if t >= Flow09.status == FINISHED and Flow10.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow10.tStart = t
-        Flow10.frameNStart = frameN  # exact frame index
-        Flow10.setAutoDraw(True)
-    continueRoutine &= Flow10.noResponse  # a response ends the trial
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in Flow_questionsComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# -------Ending Routine "Flow_questions"-------
-for thisComponent in Flow_questionsComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow01.response', Flow01.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow02.response', Flow02.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow03.response', Flow03.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow04.response', Flow04.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow05.response', Flow05.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow06.response', Flow06.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow07.response', Flow07.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow08.response', Flow08.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow09.response', Flow09.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow10.response', Flow10.getRating())
-thisExp.nextEntry()
-# the Routine "Flow_questions" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
 # ------Prepare to start Routine "Redondance"-------
@@ -3065,7 +1976,7 @@ while continueRoutine:
         win.callOnFlip(key_resp_11.clock.reset)  # t=0 on next screen flip
         event.clearEvents(eventType='keyboard')
     if key_resp_11.status == STARTED:
-        theseKeys = event.getKeys(keyList=['space'])
+        theseKeys = event.getKeys(keyList=['5'])
         
         # check for quit:
         if "escape" in theseKeys:
@@ -3135,10 +2046,9 @@ for thisTrials_sham in trials_sham:
     image.setImage(ImageFile)
     n_objets.reset()
     reaction_time = event.BuilderKeyResponse()
-    vividness.reset()
     If_No_Resp = event.BuilderKeyResponse()
     # keep track of which components have finished
-    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, vividness, If_No_Resp]
+    trial1Components = [empty_gray, fixation_cross, image, n_objets, reaction_time, If_No_Resp]
     for thisComponent in trial1Components:
         if hasattr(thisComponent, 'status'):
             thisComponent.status = NOT_STARTED
@@ -3156,8 +2066,6 @@ for thisTrials_sham in trials_sham:
             empty_gray.tStart = t
             empty_gray.frameNStart = frameN  # exact frame index
             empty_gray.setAutoDraw(True)
-            win.callOnFlip(ns.sync)
-            win.callOnFlip(ns.send_event, '00')
         frameRemains = 0.0 + 1.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if empty_gray.status == STARTED and t >= frameRemains:
             empty_gray.setAutoDraw(False)
@@ -3168,8 +2076,6 @@ for thisTrials_sham in trials_sham:
             fixation_cross.tStart = t
             fixation_cross.frameNStart = frameN  # exact frame index
             fixation_cross.setAutoDraw(True)
-            win.callOnFlip(ns.sync)
-            win.callOnFlip(ns.send_event, '01')
         frameRemains = 1 + 1.5- win.monitorFramePeriod * 0.75  # most of one frame period left
         if fixation_cross.status == STARTED and t >= frameRemains:
             fixation_cross.setAutoDraw(False)
@@ -3180,19 +2086,16 @@ for thisTrials_sham in trials_sham:
             image.tStart = t
             image.frameNStart = frameN  # exact frame index
             image.setAutoDraw(True)
-            win.callOnFlip(ns.sync)
-            win.callOnFlip(ns.send_event, '02')
         frameRemains = 2.5 + 8.0- win.monitorFramePeriod * 0.75  # most of one frame period left
         if image.status == STARTED and t >= frameRemains:
             image.setAutoDraw(False)
-            win.callOnFlip(ns.sync)
-            win.callOnFlip(ns.send_event, '03')
         # *n_objets* updates
         if (t >=10.5) and n_objets.status == NOT_STARTED:
             # keep track of start time/frame for later
             n_objets.tStart = t
             n_objets.frameNStart = frameN  # exact frame index
             n_objets.setAutoDraw(True)
+        continueRoutine &= n_objets.noResponse  # a response ends the trial
         
         # *reaction_time* updates
         if t >= 2.5 and reaction_time.status == NOT_STARTED:
@@ -3208,9 +2111,7 @@ for thisTrials_sham in trials_sham:
             reaction_time.status = STOPPED
         if reaction_time.status == STARTED:
             theseKeys = event.getKeys(keyList=['space'])
-            if theseKeys == ['space']:  
-                win.callOnFlip(ns.sync)
-                win.callOnFlip(ns.send_event, '04')
+            
             # check for quit:
             if "escape" in theseKeys:
                 endExpNow = True
@@ -3218,13 +2119,6 @@ for thisTrials_sham in trials_sham:
                 if reaction_time.keys == []:  # then this was the first keypress
                     reaction_time.keys = theseKeys[0]  # just the first key pressed
                     reaction_time.rt = reaction_time.clock.getTime()
-        # *vividness* updates
-        if (n_objets.status == FINISHED) and vividness.status == NOT_STARTED:
-            # keep track of start time/frame for later
-            vividness.tStart = t
-            vividness.frameNStart = frameN  # exact frame index
-            vividness.setAutoDraw(True)
-        continueRoutine &= vividness.noResponse  # a response ends the trial
         
         # *If_No_Resp* updates
         if t >= 10.5 and If_No_Resp.status == NOT_STARTED:
@@ -3273,9 +2167,6 @@ for thisTrials_sham in trials_sham:
     trials_sham.addData('reaction_time.keys',reaction_time.keys)
     if reaction_time.keys != None:  # we had a response
         trials_sham.addData('reaction_time.rt', reaction_time.rt)
-    # store data for trials_sham (TrialHandler)
-    trials_sham.addData('vividness.response', vividness.getRating())
-    trials_sham.addData('vividness.rt', vividness.getRT())
     # the Routine "trial1" was not non-slip safe, so reset the non-slip timer
     routineTimer.reset()
     thisExp.nextEntry()
@@ -3283,282 +2174,15 @@ for thisTrials_sham in trials_sham:
 # completed 1 repeats of 'trials_sham'
 
 
-# ------Prepare to start Routine "Mental_fatigue"-------
-t = 0
-Mental_fatigueClock.reset()  # clock
-frameN = -1
-continueRoutine = True
-# update component parameters for each repeat
-Fatigue.reset()
-# keep track of which components have finished
-Mental_fatigueComponents = [Fatigue]
-for thisComponent in Mental_fatigueComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
-# -------Start Routine "Mental_fatigue"-------
-while continueRoutine:
-    # get current time
-    t = Mental_fatigueClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    # *Fatigue* updates
-    if t >= 0.0 and Fatigue.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Fatigue.tStart = t
-        Fatigue.frameNStart = frameN  # exact frame index
-        Fatigue.setAutoDraw(True)
-    continueRoutine &= Fatigue.noResponse  # a response ends the trial
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in Mental_fatigueComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# -------Ending Routine "Mental_fatigue"-------
-for thisComponent in Mental_fatigueComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Fatigue.response', Fatigue.getRating())
-thisExp.addData('Fatigue.rt', Fatigue.getRT())
-thisExp.nextEntry()
-# the Routine "Mental_fatigue" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
-
-# ------Prepare to start Routine "Flow"-------
-t = 0
-FlowClock.reset()  # clock
-frameN = -1
-continueRoutine = True
-# update component parameters for each repeat
-key_resp_7 = event.BuilderKeyResponse()
-# keep track of which components have finished
-FlowComponents = [text_6, key_resp_7]
-for thisComponent in FlowComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
-# -------Start Routine "Flow"-------
-while continueRoutine:
-    # get current time
-    t = FlowClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    
-    # *text_6* updates
-    if t >= 0.0 and text_6.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        text_6.tStart = t
-        text_6.frameNStart = frameN  # exact frame index
-        text_6.setAutoDraw(True)
-    
-    # *key_resp_7* updates
-    if t >= 0.0 and key_resp_7.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        key_resp_7.tStart = t
-        key_resp_7.frameNStart = frameN  # exact frame index
-        key_resp_7.status = STARTED
-        # keyboard checking is just starting
-        event.clearEvents(eventType='keyboard')
-    if key_resp_7.status == STARTED:
-        theseKeys = event.getKeys(keyList=['space'])
-        
-        # check for quit:
-        if "escape" in theseKeys:
-            endExpNow = True
-        if len(theseKeys) > 0:  # at least one key was pressed
-            # a response ends the routine
-            continueRoutine = False
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in FlowComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# -------Ending Routine "Flow"-------
-for thisComponent in FlowComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# the Routine "Flow" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
-
-# ------Prepare to start Routine "Flow_questions"-------
-t = 0
-Flow_questionsClock.reset()  # clock
-frameN = -1
-continueRoutine = True
-# update component parameters for each repeat
-Flow01.reset()
-Flow02.reset()
-Flow03.reset()
-Flow04.reset()
-Flow05.reset()
-Flow06.reset()
-Flow07.reset()
-Flow08.reset()
-Flow09.reset()
-Flow10.reset()
-# keep track of which components have finished
-Flow_questionsComponents = [Flow01, Flow02, Flow03, Flow04, Flow05, Flow06, Flow07, Flow08, Flow09, Flow10]
-for thisComponent in Flow_questionsComponents:
-    if hasattr(thisComponent, 'status'):
-        thisComponent.status = NOT_STARTED
-
-# -------Start Routine "Flow_questions"-------
-while continueRoutine:
-    # get current time
-    t = Flow_questionsClock.getTime()
-    frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
-    # update/draw components on each frame
-    # *Flow01* updates
-    if t >= 0.0 and Flow01.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow01.tStart = t
-        Flow01.frameNStart = frameN  # exact frame index
-        Flow01.setAutoDraw(True)
-    # *Flow02* updates
-    if t >= Flow01.status == FINISHED and Flow02.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow02.tStart = t
-        Flow02.frameNStart = frameN  # exact frame index
-        Flow02.setAutoDraw(True)
-    # *Flow03* updates
-    if t >= Flow02.status == FINISHED and Flow03.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow03.tStart = t
-        Flow03.frameNStart = frameN  # exact frame index
-        Flow03.setAutoDraw(True)
-    # *Flow04* updates
-    if t >= Flow03.status == FINISHED and Flow04.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow04.tStart = t
-        Flow04.frameNStart = frameN  # exact frame index
-        Flow04.setAutoDraw(True)
-    # *Flow05* updates
-    if t >= Flow04.status == FINISHED and Flow05.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow05.tStart = t
-        Flow05.frameNStart = frameN  # exact frame index
-        Flow05.setAutoDraw(True)
-    # *Flow06* updates
-    if t >= Flow05.status == FINISHED and Flow06.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow06.tStart = t
-        Flow06.frameNStart = frameN  # exact frame index
-        Flow06.setAutoDraw(True)
-    # *Flow07* updates
-    if t >= Flow06.status == FINISHED and Flow07.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow07.tStart = t
-        Flow07.frameNStart = frameN  # exact frame index
-        Flow07.setAutoDraw(True)
-    # *Flow08* updates
-    if t >= Flow07.status == FINISHED and Flow08.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow08.tStart = t
-        Flow08.frameNStart = frameN  # exact frame index
-        Flow08.setAutoDraw(True)
-    # *Flow09* updates
-    if t >= Flow08.status == FINISHED and Flow09.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow09.tStart = t
-        Flow09.frameNStart = frameN  # exact frame index
-        Flow09.setAutoDraw(True)
-    # *Flow10* updates
-    if t >= Flow09.status == FINISHED and Flow10.status == NOT_STARTED:
-        # keep track of start time/frame for later
-        Flow10.tStart = t
-        Flow10.frameNStart = frameN  # exact frame index
-        Flow10.setAutoDraw(True)
-    continueRoutine &= Flow10.noResponse  # a response ends the trial
-    
-    # check if all components have finished
-    if not continueRoutine:  # a component has requested a forced-end of Routine
-        break
-    continueRoutine = False  # will revert to True if at least one component still running
-    for thisComponent in Flow_questionsComponents:
-        if hasattr(thisComponent, "status") and thisComponent.status != FINISHED:
-            continueRoutine = True
-            break  # at least one component has not yet finished
-    
-    # check for quit (the Esc key)
-    if endExpNow or event.getKeys(keyList=["escape"]):
-        core.quit()
-    
-    # refresh the screen
-    if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-        win.flip()
-
-# -------Ending Routine "Flow_questions"-------
-for thisComponent in Flow_questionsComponents:
-    if hasattr(thisComponent, "setAutoDraw"):
-        thisComponent.setAutoDraw(False)
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow01.response', Flow01.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow02.response', Flow02.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow03.response', Flow03.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow04.response', Flow04.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow05.response', Flow05.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow06.response', Flow06.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow07.response', Flow07.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow08.response', Flow08.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow09.response', Flow09.getRating())
-thisExp.nextEntry()
-# store data for thisExp (ExperimentHandler)
-thisExp.addData('Flow10.response', Flow10.getRating())
-thisExp.nextEntry()
-# the Routine "Flow_questions" was not non-slip safe, so reset the non-slip timer
-routineTimer.reset()
-
 # ------Prepare to start Routine "Resting_state_instructions2"-------
 t = 0
 Resting_state_instructions2Clock.reset()  # clock
 frameN = -1
 continueRoutine = True
 # update component parameters for each repeat
+key_resp_13 = event.BuilderKeyResponse()
 # keep track of which components have finished
-Resting_state_instructions2Components = [resting_instructions_end]
+Resting_state_instructions2Components = [resting_instructions_end, key_resp_13]
 for thisComponent in Resting_state_instructions2Components:
     if hasattr(thisComponent, 'status'):
         thisComponent.status = NOT_STARTED
@@ -3576,6 +2200,27 @@ while continueRoutine:
         resting_instructions_end.tStart = t
         resting_instructions_end.frameNStart = frameN  # exact frame index
         resting_instructions_end.setAutoDraw(True)
+    
+    # *key_resp_13* updates
+    if t >= 0.0 and key_resp_13.status == NOT_STARTED:
+        # keep track of start time/frame for later
+        key_resp_13.tStart = t
+        key_resp_13.frameNStart = frameN  # exact frame index
+        key_resp_13.status = STARTED
+        # keyboard checking is just starting
+        win.callOnFlip(key_resp_13.clock.reset)  # t=0 on next screen flip
+        event.clearEvents(eventType='keyboard')
+    if key_resp_13.status == STARTED:
+        theseKeys = event.getKeys(keyList=['5', '6'])
+        
+        # check for quit:
+        if "escape" in theseKeys:
+            endExpNow = True
+        if len(theseKeys) > 0:  # at least one key was pressed
+            key_resp_13.keys = theseKeys[-1]  # just the last key pressed
+            key_resp_13.rt = key_resp_13.clock.getTime()
+            # a response ends the routine
+            continueRoutine = False
     
     # check if all components have finished
     if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -3598,6 +2243,13 @@ while continueRoutine:
 for thisComponent in Resting_state_instructions2Components:
     if hasattr(thisComponent, "setAutoDraw"):
         thisComponent.setAutoDraw(False)
+# check responses
+if key_resp_13.keys in ['', [], None]:  # No response was made
+    key_resp_13.keys=None
+thisExp.addData('key_resp_13.keys',key_resp_13.keys)
+if key_resp_13.keys != None:  # we had a response
+    thisExp.addData('key_resp_13.rt', key_resp_13.rt)
+thisExp.nextEntry()
 # the Routine "Resting_state_instructions2" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
 
@@ -3627,13 +2279,9 @@ while continueRoutine:
         fix_resting_state.tStart = t
         fix_resting_state.frameNStart = frameN  # exact frame index
         fix_resting_state.setAutoDraw(True)
-        win.callOnFlip(ns.sync)
-        win.callOnFlip(ns.send_event, 'RS20')
-    frameRemains = 0.0 + 180- win.monitorFramePeriod * 0.75  # most of one frame period left
+    frameRemains = 0.0 + 5- win.monitorFramePeriod * 0.75  # most of one frame period left
     if fix_resting_state.status == STARTED and t >= frameRemains:
         fix_resting_state.setAutoDraw(False)
-        win.callOnFlip(ns.sync)
-        win.callOnFlip(ns.send_event, 'RS21')
     
     # *key_resp_10* updates
     if t >= 0.0 and key_resp_10.status == NOT_STARTED:
@@ -3693,9 +2341,9 @@ ShamClock.reset()  # clock
 frameN = -1
 continueRoutine = True
 # update component parameters for each repeat
-rating.reset()
+rating_sham.reset()
 # keep track of which components have finished
-ShamComponents = [rating]
+ShamComponents = [rating_sham]
 for thisComponent in ShamComponents:
     if hasattr(thisComponent, 'status'):
         thisComponent.status = NOT_STARTED
@@ -3706,13 +2354,13 @@ while continueRoutine:
     t = ShamClock.getTime()
     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
     # update/draw components on each frame
-    # *rating* updates
-    if t >= 0.0 and rating.status == NOT_STARTED:
+    # *rating_sham* updates
+    if t >= 0.0 and rating_sham.status == NOT_STARTED:
         # keep track of start time/frame for later
-        rating.tStart = t
-        rating.frameNStart = frameN  # exact frame index
-        rating.setAutoDraw(True)
-    continueRoutine &= rating.noResponse  # a response ends the trial
+        rating_sham.tStart = t
+        rating_sham.frameNStart = frameN  # exact frame index
+        rating_sham.setAutoDraw(True)
+    continueRoutine &= rating_sham.noResponse  # a response ends the trial
     
     # check if all components have finished
     if not continueRoutine:  # a component has requested a forced-end of Routine
@@ -3736,8 +2384,8 @@ for thisComponent in ShamComponents:
     if hasattr(thisComponent, "setAutoDraw"):
         thisComponent.setAutoDraw(False)
 # store data for thisExp (ExperimentHandler)
-thisExp.addData('rating.response', rating.getRating())
-thisExp.addData('rating.rt', rating.getRT())
+thisExp.addData('rating_sham.response', rating_sham.getRating())
+thisExp.addData('rating_sham.rt', rating_sham.getRT())
 thisExp.nextEntry()
 # the Routine "Sham" was not non-slip safe, so reset the non-slip timer
 routineTimer.reset()
