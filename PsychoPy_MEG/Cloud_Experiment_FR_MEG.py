@@ -36,13 +36,13 @@ MEG_SETTINGS = {
 }
 
 # Activate parallel port
-#port = parallel.ParallelPort(address='/dev/parport0')
-port = []
+port = parallel.ParallelPort(address='/dev/parport0')
+#port = []
 def send_data(port, data):
-    #port.setData(data)
-    print(data)
+    port.setData(data)
+    #print(data)
     time.sleep(0.001)
-    #port.setData(0)  # reset
+    port.setData(0)  # reset
 
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))
