@@ -11,7 +11,7 @@ If you publish work using this script please cite the PsychoPy publications:
 """
 
 from __future__ import absolute_import, division
-from psychopy import locale_setup, sound, gui, visual, core, data, event, logging, clock
+from psychopy import locale_setup, sound, gui, visual, core, data, event, logging, clock, parallel
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 import numpy as np  # whole numpy lib is available, prepend 'np.'
@@ -41,7 +41,7 @@ port = parallel.ParallelPort(address='/dev/parport0')
 def send_data(port, data):
     port.setData(data)
     #print(data)
-    time.sleep(0.001)
+    time.sleep(0.1)
     port.setData(0)  # reset
 
 # Ensure that relative paths start from the same directory as this script
@@ -76,7 +76,7 @@ endExpNow = False  # flag for 'escape' or other condition => quit the exp
 
 # Setup the Window
 win = visual.Window(
-    size=[1024, 768], fullscr=True, screen=0,
+    size=[1024, 768], fullscr=True, screen=1,
     allowGUI=True, allowStencil=False,
     monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
@@ -99,7 +99,7 @@ Instruction = visual.TextStim(win=win, name='Instruction',
 # Initialize components for Routine "Instructions2"
 Instructions2Clock = core.Clock()
 fatigueinstructions2 = visual.TextStim(win=win, name='fatigueinstructions2',
-    text=u"T\xe2che:\n\nDes images de nuages informatiques vous seront pr\xe9sent\xe9es.\nVotre t\xe2che consistera \xe0 percevoir le plus grand nombre de formes figuratives dans chaque image.\nLorsque vous aurez d\xe9tect\xe9 une premi\xe8re forme figurative, vous devrez appuyer avec votre pouce.\n\nVous aurez par la suite \xe0 continuer votre recherche de formes figuratives pendant toute la pr\xe9sentation de l'image.\nApr\xe8s chaque image, il vous sera demand\xe9 le nombre total de formes per\xe7ues.\nSi vous n'avez per\xe7u aucune forme lors de la pr\xe9sentation d'une image, appuyez avec un de vos petits doigts pour passer \xe0 l'image suivante \nAvant chaque bloc, il vous sera indiqu\xe9 si vous devez r\xe9pondre avec le pouce gauche ou le pouce droit pour le bloc qui suivra. \n\n\xc0 la fin de l'exp\xe9rience, les images pour lesquelles vous avez r\xe9pondu avoir per\xe7u plusieurs formes figuratives vous seront pr\xe9sent\xe9es \xe0 nouveau\nafin que vous partagiez vos perceptions avec l'exp\xe9rimentateur.\n\nVous commencerez par un bloc d'essai pour vous familiariser avec la t\xe2che.\n\nVeuillez appuyer avec le pouce gauche pour l'enti\xe8ret\xe9 de ce bloc d'essai.\n\n\nBonne exp\xe9rience!\n\n",
+    text=u"T\xe2che:\n\nDes images de nuages informatiques vous seront pr\xe9sent\xe9es.\nVotre t\xe2che consistera \xe0 percevoir le plus grand nombre de formes figuratives dans chaque image.\nLorsque vous aurez d\xe9tect\xe9 une premi\xe8re forme figurative, vous devrez appuyer avec votre pouce.\n\nVous aurez par la suite \xe0 continuer votre recherche de formes figuratives pendant toute la pr\xe9sentation de l'image.\nApr\xe8s chaque image, il vous sera demand\xe9 le nombre total de formes per\xe7ues.\nVous utiliserez vos pouces pour changer de choix de réponse, et vos index pour valider votre réponse \nAvant chaque bloc, il vous sera indiqu\xe9 si vous devez r\xe9pondre avec le pouce gauche ou le pouce droit pour le bloc qui suivra. \n\n\xc0 la fin de l'exp\xe9rience, les images pour lesquelles vous avez r\xe9pondu avoir per\xe7u plusieurs formes figuratives vous seront pr\xe9sent\xe9es \xe0 nouveau\nafin que vous partagiez vos perceptions avec l'exp\xe9rimentateur.\n\nVous commencerez par un bloc d'essai pour vous familiariser avec la t\xe2che.\n\nVeuillez appuyer avec le pouce gauche pour l'enti\xe8ret\xe9 de ce bloc d'essai.\n\n\nBonne exp\xe9rience!\n\n",
     font=u'Arial',
     pos=(0, 0), height=0.05, wrapWidth=None, ori=0, 
     color=u'white', colorSpace='rgb', opacity=1,
@@ -333,11 +333,11 @@ image = visual.ImageStim(
     flipHoriz=False, flipVert=False,
     texRes=128, interpolate=True, depth=-2.0)
 n_objets = visual.RatingScale(win=win, name='n_objets', marker=u'triangle', 
-                                size=1.0, pos=[0.0, 0.0], low=1, high=5, 
-                                labels=[u'1', u' 5 et plus'], 
+                                size=1.0, pos=[0.0, 0.0], low=0, high=5, 
+                                labels=[u'0', u' 5 et plus'], 
                                 scale=u"Veuillez indiquer le nombre d'objets significatifs per\xe7us", 
-                                disappear=True, respKeys = (), leftKeys = '5', rightKeys = '6', acceptKeys = ['4', '7'],
-                                markerStart = '1', skipKeys=['1', '0'])
+                                disappear=True, skipKeys=['1', '0'], leftKeys = '5', rightKeys = '6', acceptKeys = ['4', '7'],
+                                markerStart = '0')
 # Initialize components for Routine "Resting_state_instructions2"
 Resting_state_instructions2Clock = core.Clock()
 resting_instructions_end = visual.TextStim(win=win, name='resting_instructions_end',
